@@ -1,6 +1,7 @@
 package Controlador;
 import java.util.*;
 
+import Excepciones.ExceptionCantidad;
 import InputOutput.*;
 import Modelo.*;
 
@@ -13,7 +14,7 @@ public class Laboratorio {
         this.experimentos = new ArrayList<Experimento>();
     }
     
-    public void crearExperimento(){
+    public void crearExperimento() throws ExceptionCantidad{
         Salida salida = new Salida();
         salida.pedirDatosExperimentos();
     }
@@ -30,6 +31,5 @@ public class Laboratorio {
     public void eliminarExperimento(Experimento e){
         experimentos.remove(e);
     }
-
 
 }

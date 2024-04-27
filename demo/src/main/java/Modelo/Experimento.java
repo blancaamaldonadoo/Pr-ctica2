@@ -1,6 +1,7 @@
 package Modelo;
 import java.util.*;
 
+import Excepciones.ExceptionCantidad;
 import InputOutput.Salida;
 
 public class Experimento {
@@ -58,7 +59,7 @@ public class Experimento {
         System.out.println(p.toString());
     }
 
-    public void crearPoblacion(){
+    public void crearPoblacion() throws ExceptionCantidad{
        Salida salida= new Salida();
        salida.pedirDatosPoblacion();
     }
