@@ -3,25 +3,15 @@ import java.sql.*;
 import java.text.*;
 import java.util.Scanner;
 
-import Modelo.Luminosidad;
+import Excepciones.ExceptionCantidad;
+import Modelo.*;
 
 public class Salida{
     
-    Scanner sc= new Scanner(System.in);
-
-    public void pedirDatosDosis(){
-        System.out.println("Introduce la cantidad inicial de comida: ");
-        int cantidadInicial=sc.nextInt();
-        System.out.println("Introduce el día en el que quiere dejar de "+
-                    " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
-        int diaStopIncremento=sc.nextInt();
-        System.out.println("Introduce la cantidad que quiera dar ese día: ");
-        int dosisDiaStopIncremento=sc.nextInt();
-        System.out.println("Introduce la cantidad final (dia 30): ");
-        int dosisDia30=sc.nextInt();
-    }
-
-    public void pedirDatosPoblaciones(){
+    private Scanner sc= new Scanner(System.in);
+    
+    public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
+        Scanner sc= new Scanner(System.in);
         System.out.println("Introduce el nombre de la población: ");
         String nombre=sc.nextLine();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,10 +41,35 @@ public class Salida{
         String nivelLuzStr = sc.nextLine();
         Luminosidad nivelLuz = Luminosidad.valueOf(nivelLuzStr);
         System.out.println("Para la dosis de comida: ");
-        pedirDatosDosis();
+        Poblacion p = new Poblacion(nombre, fechaInicio, fechaFin, numBacteriasIniciales, temperatura, nivelLuz, pedirDatosDosis());
+        return p;
     }
 
-    public void pedirDatosExperimentos(){
+    public void comprobarCantidadComida(int cantidad) throws ExceptionCantidad{
+        if(cantidad>=300){
+            throw new ExceptionCantidad("La cantidad inicial debe ser un número entero menor de 300");
+        }
+    }
+
+    public Dosis pedirDatosDosis()throws ExceptionCantidad{
+        System.out.println("Introduce la cantidad inicial de comida: ");
+        int cantidadInicial=sc.nextInt();
+        comprobarCantidadComida(cantidadInicial);
+        System.out.println("Introduce el día en el que quiere dejar de "+
+                    " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
+        int diaStopIncremento=sc.nextInt();
+        System.out.println("Introduce la cantidad que quiera dar ese día: ");
+        int dosisDiaStopIncremento=sc.nextInt();
+        comprobarCantidadComida(dosisDiaStopIncremento);
+        System.out.println("Introduce la cantidad final (dia 30): ");
+        int dosisDia30=sc.nextInt();
+        comprobarCantidadComida(dosisDia30);
+        Dosis d = new Dosis(cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDia30);
+        return d;
+    }
+
+    public Experimento pedirDatosExperimentos() throws ExceptionCantidad{
+        Scanner sc= new Scanner(System.in);
         System.out.println("Introduce el nombre del Experimento: ");
         String nombre=sc.nextLine();
         System.out.println("Introduce el número inicial de bacterias: ");
@@ -62,7 +77,8 @@ public class Salida{
         System.out.println("Introduce la temperatura: ");
         double temperatura=sc.nextDouble();
         System.out.println("Para la dosis de comida: ");
-        pedirDatosDosis();
+        Experimento e = new Experimento(nombre, numBacterias, temperatura, pedirDatosDosis());
+        return e;
     }
 
 }

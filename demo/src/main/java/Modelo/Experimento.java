@@ -1,6 +1,5 @@
 package Modelo;
-
-import java.util.ArrayList;
+import java.util.*;
 
 import InputOutput.Salida;
 
@@ -11,8 +10,10 @@ public class Experimento {
     private double temperatura;
     private Dosis dosisComida;
     private ArrayList<Poblacion> poblaciones;
-    private Salida salida;
 
+    public Experimento(){
+        this.poblaciones = new ArrayList<Poblacion>();
+    }
     public Experimento(int numBacterias, double temperatura, Dosis dosisComida){
         this.temperatura = temperatura;
         this.numBacterias = numBacterias;
@@ -58,12 +59,15 @@ public class Experimento {
     }
 
     public void crearPoblacion(){
-       salida.pedirDatosPoblaciones();
+       Salida salida= new Salida();
+       salida.pedirDatosPoblacion();
     }
+    
 
-    public void modificarPoblacion(){
+    public void modificarPoblacion(Poblacion p){
         
     }
+
     public void addPoblacion(Poblacion p){
         poblaciones.add(p);
     }

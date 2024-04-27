@@ -1,21 +1,25 @@
 package Modelo;
-import java.sql.*;
-import java.time.*;
+import java.util.*;
+import java.util.Date;
 
+import Excepciones.ExceptionCantidad;
 import InputOutput.Salida;
 
 public class Poblacion extends Experimento{
     
     private String nombre;
-    private LocalDate fechaInicio;
+    private Date fechaInicio;
     private Date fechaFin;
     private int numBacteriasIniciales;
     private double temperatura;
     private Luminosidad nivelLuz;
     private Dosis dosis;
-    private Salida salida;
 
-    public Poblacion(String nombre, LocalDate fechaInicio, Date fechaFin, int numBacteriasIniciales, double temperatura, Luminosidad nivelLuz, Dosis dosis) {
+    public Poblacion(){
+        super();
+    }
+
+    public Poblacion(String nombre, Date fechaInicio, Date fechaFin, int numBacteriasIniciales, double temperatura, Luminosidad nivelLuz, Dosis dosis) {
         super(numBacteriasIniciales, temperatura, dosis);
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
@@ -30,10 +34,10 @@ public class Poblacion extends Experimento{
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
-    public LocalDate getFechaInicio(){
+    public Date getFechaInicio(){
         return fechaInicio;
     }
-    public void setFechaInicio(LocalDate fechaInicio){
+    public void setFechaInicio(Date fechaInicio){
         this.fechaInicio = fechaInicio;
     }
     public Date getFechaFin(){
@@ -81,9 +85,9 @@ public class Poblacion extends Experimento{
         return texto;
     }
 
-    public void crearDosis(int cantidadInicial, int diaStopIncremento, int dosisDiaStopIncremento, int dosisDia30){
+    public void crearDosis() throws ExceptionCantidad{
+        Salida salida= new Salida();
         salida.pedirDatosDosis();
-        Dosis d= new Dosis(cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDia30);
     }
 
     public void modificarDosis(){
@@ -93,5 +97,7 @@ public class Poblacion extends Experimento{
     public void visualizarDosis(Dosis d){
         System.out.println(d.toString());
     }
+
+
     
 }

@@ -8,13 +8,13 @@ import Modelo.*;
 public class Laboratorio {
  
     private ArrayList<Experimento> experimentos;
-    private Salida salida;
 
     public Laboratorio(){
         this.experimentos = new ArrayList<Experimento>();
     }
     
     public void crearExperimento(){
+        Salida salida = new Salida();
         salida.pedirDatosExperimentos();
     }
 
