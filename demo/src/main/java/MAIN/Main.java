@@ -2,12 +2,11 @@ package MAIN;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import Controlador.Laboratorio;
 import Excepciones.ExceptionCantidad;
-import InputOutput.Salida;
 import Modelo.Experimento;
+import Modelo.Poblacion;
+
 
 public class Main{
     public static void main(String[] args) {
@@ -51,7 +50,8 @@ public class Main{
 
             case 3:{
                 try {
-                    
+                    Experimento experimento= Laboratorio.accederExperimentoActual();
+                    experimento.addPoblacion(experimento.crearPoblacion());
                 } catch (ExceptionCantidad e) {
                     System.out.println("Error al crear la población");
                     e.printStackTrace();
@@ -60,15 +60,45 @@ public class Main{
             }
 
             case 4:{
+                Experimento experimento= Laboratorio.accederExperimentoActual();
+                experimento.visualizarNombresPoblaciones();
                 break;
             }
 
             case 5:{
+                Experimento experimento= Laboratorio.accederExperimentoActual();
+                System.out.println("Introduce el nombre de la población que quieres borrar: ");
+                String nombre="";
+                try {
+                    nombre = teclado.readLine();
+                } catch (Exception e) {
+                    System.out.println("Error al leer el nombre");
+                    e.printStackTrace();
+                }
+                for(Poblacion pob: experimento.getPoblaciones()){
+                    if(pob.getNombre().equals(nombre)){
+                    experimento.eliminarPoblacion(pob);
+                    }
                 break;
-            }
+                }
+            }   
 
             case 6:{
+                Experimento experimento= Laboratorio.accederExperimentoActual();
+                System.out.println("Introduce el nombre de la población de la que quieres ver los detalles: ");
+                String nombre="";
+                try {
+                    nombre = teclado.readLine();
+                } catch (Exception e) {
+                    System.out.println("Error al leer el nombre");
+                    e.printStackTrace();
+                }
+                for(Poblacion pob: experimento.getPoblaciones()){
+                    if(pob.getNombre().equals(nombre)){
+                    experimento.verDetallesPoblacion(pob);
+                    }
                 break;
+                }
             }
 
             case 7:{

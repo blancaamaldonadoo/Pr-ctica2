@@ -54,16 +54,29 @@ public class Experimento {
     public void setDosisComida(Dosis dosisComida){
         this.dosisComida = dosisComida;
     }
-   
+
+
     public void verDetallesPoblacion(Poblacion p){
         System.out.println(p.toString());
     }
 
-    public void crearPoblacion() throws ExceptionCantidad{
-       Salida salida= new Salida();
-       salida.pedirDatosPoblacion();
+    public ArrayList<Poblacion> getPoblaciones(){
+        return poblaciones;
     }
     
+    public Poblacion crearPoblacion() throws ExceptionCantidad{
+       Salida salida= new Salida();
+       Poblacion p= salida.pedirDatosPoblacion();
+        return p;
+    }
+    
+    public String visualizarNombresPoblaciones(){
+        String nombres="";
+        for(Poblacion p: poblaciones){
+            nombres+=p.getNombre()+"\n";
+        }
+        return nombres;
+    }
 
     public void modificarPoblacion(Poblacion p){
         

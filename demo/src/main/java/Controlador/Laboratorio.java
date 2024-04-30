@@ -32,4 +32,8 @@ public class Laboratorio {
         experimentos.remove(e);
     }
 
+    public Experimento accederExperimentoActual(){
+        return experimentos.get(experimentos.size()-1); //Habría que localizar el file o así vale???
+    }
+
 }

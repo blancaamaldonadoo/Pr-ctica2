@@ -1,5 +1,4 @@
 package Modelo;
-import java.util.*;
 import java.util.Date;
 
 import Excepciones.ExceptionCantidad;
@@ -86,18 +85,17 @@ public class Poblacion extends Experimento{
     }
 
     public void crearDosis() throws ExceptionCantidad{
-        Salida salida= new Salida();
+        Salida salida= new Salida(); //es mejor crear un atributo privado de salida???
         salida.pedirDatosDosis();
     }
 
-    public void modificarDosis(){
-
+    public void modificarDosis(Dosis dosis) throws ExceptionCantidad{
+        Salida salida= new Salida();
+        salida.DatosModificarDosis(dosis);
     }
 
     public void visualizarDosis(Dosis d){
         System.out.println(d.toString());
     }
-
-
     
 }
