@@ -9,9 +9,27 @@ import Modelo.*;
 public class Laboratorio {
  
     private ArrayList<Experimento> experimentos;
+    private Experimento experimentoActual;
 
     public Laboratorio(){
+        this.experimentoActual=null;
         this.experimentos = new ArrayList<Experimento>();
+    }
+
+    public ArrayList<Experimento> getExperimentos(){
+        return experimentos;
+    }
+
+    public void setExperimentos(ArrayList<Experimento> experimentos){
+        this.experimentos = experimentos;
+    }
+
+    public Experimento getExperimentoActual(){
+        return experimentoActual;
+    }
+
+    public void setExperimentoActual(Experimento experimentoActual){
+        this.experimentoActual = experimentoActual;
     }
     
     public void crearExperimento() throws ExceptionCantidad{
@@ -21,33 +39,29 @@ public class Laboratorio {
     }
 
     public Experimento CambiarNombreExperimento(Experimento experimento){
-        Scanner sc= new Scanner(System.in);
-        System.out.println("Introduce el nuevo nombre del Experimento: ");
-        String nombre=sc.nextLine();
-        sc.close();
-
+        String nombre=Comprobaciones.leerString("Introduce el nuevo nombre del Experimento: ");
         if(nombre.isEmpty()){
             System.out.println("No se ha introducido ningún nombre");
             return experimento;
-        }else if(nombre.equals(experimento.getNombre())){
-            System.out.println("El nombre introducido es el mismo que el actual");
-            return experimento;
-        }        
+        }
+        for(Experimento e: experimentos){
+            if(e.getNombre().equals(nombre)){
+                System.out.println("Ya existe un experimento con ese nombre");
+                return experimento;
+            }
+        }
         experimento.setNombre(nombre);
         return experimento;
     }
 
     public void addExperimento(Experimento e){
         experimentos.add(e);
+        experimentoActual=e;
     }
 
 
     public void eliminarExperimento(Experimento e){
         experimentos.remove(e);
-    }
-
-    public Experimento accederExperimentoActual(){
-        return experimentos.get(experimentos.size()-1); //Habría que localizar el file o así vale???
     }
 
 }

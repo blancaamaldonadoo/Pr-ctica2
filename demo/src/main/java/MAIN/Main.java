@@ -1,9 +1,10 @@
 package MAIN;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
+
 import Controlador.Laboratorio;
 import Excepciones.ExceptionCantidad;
+import InputOutput.Comprobaciones;
 import Modelo.Experimento;
 import Modelo.Poblacion;
 
@@ -35,6 +36,7 @@ public class Main{
         switch(opcion){
 
             case 1:{
+                //abrirArchivo();
                 break;
             }
 
@@ -50,7 +52,7 @@ public class Main{
 
             case 3:{
                 try {
-                    Experimento experimento= Laboratorio.accederExperimentoActual();
+                    Experimento experimento= Laboratorio.getExperimentoActual();
                     experimento.addPoblacion(experimento.crearPoblacion());
                 } catch (ExceptionCantidad e) {
                     System.out.println("Error al crear la población");
@@ -60,21 +62,14 @@ public class Main{
             }
 
             case 4:{
-                Experimento experimento= Laboratorio.accederExperimentoActual();
+                Experimento experimento= Laboratorio.getExperimentoActual();
                 experimento.visualizarNombresPoblaciones();
                 break;
             }
 
             case 5:{
-                Experimento experimento= Laboratorio.accederExperimentoActual();
-                System.out.println("Introduce el nombre de la población que quieres borrar: ");
-                String nombre="";
-                try {
-                    nombre = teclado.readLine();
-                } catch (Exception e) {
-                    System.out.println("Error al leer el nombre");
-                    e.printStackTrace();
-                }
+                Experimento experimento= Laboratorio.getExperimentoActual();
+                String nombre= Comprobaciones.leerString("Introduce el nombre de la población que quieres borrar: ");
                 for(Poblacion pob: experimento.getPoblaciones()){
                     if(pob.getNombre().equals(nombre)){
                     experimento.eliminarPoblacion(pob);
@@ -84,15 +79,8 @@ public class Main{
             }   
 
             case 6:{
-                Experimento experimento= Laboratorio.accederExperimentoActual();
-                System.out.println("Introduce el nombre de la población de la que quieres ver los detalles: ");
-                String nombre="";
-                try {
-                    nombre = teclado.readLine();
-                } catch (Exception e) {
-                    System.out.println("Error al leer el nombre");
-                    e.printStackTrace();
-                }
+                Experimento experimento= Laboratorio.getExperimentoActual();
+                String nombre= Comprobaciones.leerString("Introduce el nombre de la población de la que quieres ver los detalles: ");
                 for(Poblacion pob: experimento.getPoblaciones()){
                     if(pob.getNombre().equals(nombre)){
                     experimento.verDetallesPoblacion(pob);
@@ -118,4 +106,26 @@ public class Main{
 
     }
 
+    public static Experimento abrirArchivo(File file) throws IOException{
+        FileInputStream fileInputStream =null;
+        InputStreamReader inputStreamReader = null;
+        BufferedReader bufferedReader = null;
+        try{
+            fileInputStream = new FileInputStream(file);
+            inputStreamReader = new InputStreamReader(fileInputStream);
+            bufferedReader = new BufferedReader(inputStreamReader);
+        }catch(FileNotFoundException e){
+            System.out.println("Error al abrir el archivo");
+            e.printStackTrace();
+        }catch(IOException e){
+            System.out.println("Error al leer el archivo");
+            e.printStackTrace();
+        }
+        String linea="";
+        /*try{
+            linea=BufferedReader.readLine(); CONTINUAR.......
+
+        }*/
+        return null;
+    }
 }
