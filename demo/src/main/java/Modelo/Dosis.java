@@ -1,5 +1,7 @@
 package Modelo;
 
+import Excepciones.ExceptionCantidad;
+
 public class Dosis{
 
     private int cantidadInicial;
@@ -8,7 +10,10 @@ public class Dosis{
     private int dosisDia30;
 
 
-    public Dosis(int cantidadInicial, int diaStopIncremento, int dosisDiaStopIncremento, int dosisDia30) {
+    public Dosis(int cantidadInicial, int diaStopIncremento, int dosisDiaStopIncremento, int dosisDia30) throws ExceptionCantidad{
+        if(cantidadInicial>300||dosisDia30>300){
+            throw new ExceptionCantidad("Las dosis no pueden ser mayores a 300");
+        }
         this.cantidadInicial = cantidadInicial;
         this.diaStopIncremento = diaStopIncremento;
         this.dosisDiaStopIncremento = dosisDiaStopIncremento;
@@ -48,6 +53,21 @@ public class Dosis{
         texto+="Dosis del dia 30: "+dosisDia30+"\n";
         return texto;
 
+    }
+
+    public int calcularDosis(int dia){
+        double dosis=0;
+        if(dia<diaStopIncremento){
+            double incremento= (dosisDiaStopIncremento-cantidadInicial)/(double)diaStopIncremento;
+            dosis= (incremento*dia) + cantidadInicial;
+        }else if(dia==diaStopIncremento){
+            dosis=dosisDiaStopIncremento;
+        }
+        else {
+            double decremento= (dosisDiaStopIncremento-dosisDia30)/(double)(30-diaStopIncremento);
+            dosis= dosisDiaStopIncremento- (decremento*(dia-diaStopIncremento));
+        }
+        return (int) dosis;
     }
 
 }

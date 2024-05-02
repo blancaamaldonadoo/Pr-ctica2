@@ -15,12 +15,26 @@ public class Laboratorio {
     }
     
     public void crearExperimento() throws ExceptionCantidad{
+        //createNewFile();
         Salida salida = new Salida();
         salida.pedirDatosExperimentos();
     }
 
-    public void modificarExperimento(){
-        
+    public Experimento CambiarNombreExperimento(Experimento experimento){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Introduce el nuevo nombre del Experimento: ");
+        String nombre=sc.nextLine();
+        sc.close();
+
+        if(nombre.isEmpty()){
+            System.out.println("No se ha introducido ningún nombre");
+            return experimento;
+        }else if(nombre.equals(experimento.getNombre())){
+            System.out.println("El nombre introducido es el mismo que el actual");
+            return experimento;
+        }        
+        experimento.setNombre(nombre);
+        return experimento;
     }
 
     public void addExperimento(Experimento e){

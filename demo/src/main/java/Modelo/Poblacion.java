@@ -1,5 +1,5 @@
 package Modelo;
-import java.util.Date;
+import java.time.LocalDate;
 
 import Excepciones.ExceptionCantidad;
 import InputOutput.Salida;
@@ -7,23 +7,20 @@ import InputOutput.Salida;
 public class Poblacion extends Experimento{
     
     private String nombre;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     private int numBacteriasIniciales;
     private double temperatura;
     private Luminosidad nivelLuz;
     private Dosis dosis;
 
-    public Poblacion(){
-        super();
-    }
-
-    public Poblacion(String nombre, Date fechaInicio, Date fechaFin, int numBacteriasIniciales, double temperatura, Luminosidad nivelLuz, Dosis dosis) {
-        super(numBacteriasIniciales, temperatura, dosis);
+    public Poblacion(String nombre, LocalDate fechaInicio, LocalDate fechaFin, int numBacteriasIniciales, double temperatura, Luminosidad nivelLuz, Dosis dosis) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.numBacteriasIniciales = numBacteriasIniciales;
         this.temperatura = temperatura;
+        this.dosis=dosis;
         this.nivelLuz = nivelLuz;
     }
 
@@ -33,16 +30,16 @@ public class Poblacion extends Experimento{
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
-    public Date getFechaInicio(){
+    public LocalDate getFechaInicio(){
         return fechaInicio;
     }
-    public void setFechaInicio(Date fechaInicio){
+    public void setFechaInicio(LocalDate fechaInicio){
         this.fechaInicio = fechaInicio;
     }
-    public Date getFechaFin(){
+    public LocalDate getFechaFin(){
         return fechaFin;
     }
-    public void setFechaFin(Date fechaFin){
+    public void setFechaFin(LocalDate fechaFin){
         this.fechaFin = fechaFin;
     }
     public int getNumBacteriasIniciales(){

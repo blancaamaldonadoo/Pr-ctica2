@@ -1,44 +1,19 @@
 package InputOutput;
-import java.sql.*;
-import java.text.*;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 
 import Excepciones.ExceptionCantidad;
 import Modelo.*;
 
 public class Salida{
     
-    private Scanner sc= new Scanner(System.in); //Donde lo cierro? Mejor BufferedReader?
-    
     public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
-        System.out.println("Introduce el nombre de la población: ");
-        String nombre=sc.nextLine();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.println("Introduce la fecha de incio: ");
-        String fechaInicioStr = sc.nextLine();
-        Date fechaInicio = null;
-        try {
-             fechaInicio = (Date) sdf.parse(fechaInicioStr);
-        } catch (ParseException e) {
-             e.printStackTrace();
-        }
-
-        System.out.println("Introduce la fecha de fin: ");
-        String fechaFinStr = sc.nextLine();
-        Date fechaFin = null;
-        try {
-             fechaFin = (Date) sdf.parse(fechaFinStr);
-        } catch (ParseException e) {
-             e.printStackTrace();
-        }
-
-        System.out.println("Introduce el número de bacterias iniciales: ");
-        int numBacteriasIniciales=sc.nextInt();
-        System.out.println("Introduce la temperatura: ");
-        double temperatura=sc.nextDouble();
-        System.out.println("Introduce el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
-        String nivelLuzStr = sc.nextLine();
-        Luminosidad nivelLuz = Luminosidad.valueOf(nivelLuzStr);
+        String nombre= Comprobaciones.leerString("Introduce el nombre de la población: ");
+        LocalDate fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de incio: ");
+        LocalDate fechaFin=Comprobaciones.leerFecha("Introduce la fecha de fin: ");
+        int numBacteriasIniciales= Comprobaciones.leerInt("Introduce el número de bacterias iniciales: ");
+        double temperatura= Comprobaciones.leerDouble("Introduce la temperatura: ");
+        Luminosidad nivelLuz=Comprobaciones.leerLuminosidad("Introduce el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
         System.out.println("Para la dosis de comida: ");
         Poblacion p = new Poblacion(nombre, fechaInicio, fechaFin, numBacteriasIniciales, temperatura, nivelLuz, pedirDatosDosis());
         return p;
@@ -51,88 +26,40 @@ public class Salida{
     }
 
     public Dosis pedirDatosDosis()throws ExceptionCantidad{
-        System.out.println("Introduce la cantidad inicial de comida: ");
-        int cantidadInicial=sc.nextInt();
+        int cantidadInicial=Comprobaciones.leerInt("Introduce la cantidad inicial de comida: ");
         comprobarCantidadComida(cantidadInicial);
-        System.out.println("Introduce el día en el que quiere dejar de "+
+        int diaStopIncremento=Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
                     " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
-        int diaStopIncremento=sc.nextInt();
-        System.out.println("Introduce la cantidad que quiera dar ese día: ");
-        int dosisDiaStopIncremento=sc.nextInt();
+        int dosisDiaStopIncremento=Comprobaciones.leerInt("Introduce la cantidad que quiera dar ese día: ");
         comprobarCantidadComida(dosisDiaStopIncremento);
-        System.out.println("Introduce la cantidad final (dia 30): ");
-        int dosisDia30=sc.nextInt();
+        int dosisDia30=Comprobaciones.leerInt("Introduce la cantidad final (dia 30): ");
         comprobarCantidadComida(dosisDia30);
         Dosis d = new Dosis(cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDia30);
         return d;
     }
 
-    public Experimento pedirDatosExperimentos() throws ExceptionCantidad{
-        System.out.println("Introduce el nombre del Experimento: ");
-        String nombre=sc.nextLine();
-        System.out.println("Introduce el número inicial de bacterias: ");
-        int numBacterias=sc.nextInt();
-        System.out.println("Introduce la temperatura: ");
-        double temperatura=sc.nextDouble();
-        System.out.println("Para la dosis de comida: ");
-        Experimento e = new Experimento(nombre, numBacterias, temperatura, pedirDatosDosis());
-        return e;
+    public Experimento pedirDatosExperimentos(){
+        String nombre= Comprobaciones.leerString("Introduce el nombre del Experimento: ");
+        Experimento experimento= new Experimento(nombre, new ArrayList<Poblacion>());
+        return experimento;
     }
 
     public Dosis DatosModificarDosis(Dosis dosis)throws ExceptionCantidad{
-        System.out.println("Introduce la cantidad inicial de comida: ");
-        try{
-            int cantidadInicial=sc.nextInt();
-            comprobarCantidadComida(cantidadInicial);
-            dosis.setCantidadInicial(cantidadInicial);
-        }catch(ExceptionCantidad e){
-            System.out.println("Error al introducir la cantidad inicial");
-            e.printStackTrace();
-        }
-        System.out.println("Introduce el día en el que quiere dejar de "+
+        int cantidadInicial=Comprobaciones.leerInt("Introduce la nueva cantidad inicial de comida: ");
+        comprobarCantidadComida(cantidadInicial);
+        dosis.setCantidadInicial(cantidadInicial);
+    
+        int diaStopIncremento= Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
                     " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
-        int diaStopIncremento=sc.nextInt();
         dosis.setDiaStopIncremento(diaStopIncremento);
 
-        System.out.println("Introduce la cantidad que quiera dar ese día: ");
-        try{
-        int dosisDiaStopIncremento=sc.nextInt();
-        dosis.setDosisDiaStopIncremento(dosisDiaStopIncremento);
+        int dosisDiaStopIncremento=Comprobaciones.leerInt("Introduce la cantidad que quiera dar ese día: ");
         comprobarCantidadComida(dosisDiaStopIncremento);
-        }catch(ExceptionCantidad e){
-            System.out.println("Error al introducir la dosis de fin de incremento");
-            e.printStackTrace();
-        }
-        System.out.println("Introduce la cantidad final (dia 30): ");
-        try{
-        int dosisDia30=sc.nextInt();
-        dosis.setDosisDia30(dosisDia30);
+        dosis.setDosisDiaStopIncremento(dosisDiaStopIncremento);
+        int dosisDia30=Comprobaciones.leerInt("Introduce la cantidad final (dia 30): ");
         comprobarCantidadComida(dosisDia30);
-        }catch(ExceptionCantidad e){
-            System.out.println("Error al introducir la dosis del día 30");
-            e.printStackTrace();
-        }
+        dosis.setDosisDia30(dosisDia30);
         return dosis;
     }
 
-    public Experimento DatosModificarExperimento(Experimento experimento){
-        System.out.println("Introduce el nombre del Experimento: ");
-        String nombre=sc.nextLine();
-        experimento.setNombre(nombre);
-        System.out.println("Introduce el número inicial de bacterias: ");
-        int numBacterias=sc.nextInt();
-        experimento.setNumeroDeBacterias(numBacterias);
-        System.out.println("Introduce la temperatura: ");
-        double temperatura=sc.nextDouble();
-        experimento.setTemperatura(temperatura);
-        System.out.println("Para la dosis de comida: ");
-        try{
-        Dosis dosis= experimento.getDosisComida();
-        experimento.setDosisComida(DatosModificarDosis(dosis));
-        }catch(ExceptionCantidad e){
-            System.out.println("Error al introducir la dosis de comida");
-            e.printStackTrace();    
-        }
-        return experimento;
-    }
 }
