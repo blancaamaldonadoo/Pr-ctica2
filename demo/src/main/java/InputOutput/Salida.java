@@ -19,22 +19,23 @@ public class Salida{
         return p;
     }
 
-    public void comprobarCantidadComida(int cantidad) throws ExceptionCantidad{
-        if(cantidad>=300){
-            throw new ExceptionCantidad("La cantidad inicial debe ser un número entero menor de 300");
+    public void comprobarCantidadComida(long cantidad) throws ExceptionCantidad{
+        if(cantidad>=300000 || cantidad<=0){
+            throw new ExceptionCantidad("La cantidad inicial debe ser un número entero menor de 300000 miligramos");
         }
     }
 
     public Dosis pedirDatosDosis()throws ExceptionCantidad{
-        int cantidadInicial=Comprobaciones.leerInt("Introduce la cantidad inicial de comida: ");
+        int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
+        long cantidadInicial=Comprobaciones.leerLong("Introduce la cantidad inicial de comida: ");
         comprobarCantidadComida(cantidadInicial);
         int diaStopIncremento=Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
                     " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
-        int dosisDiaStopIncremento=Comprobaciones.leerInt("Introduce la cantidad que quiera dar ese día: ");
+        long dosisDiaStopIncremento=Comprobaciones.leerLong("Introduce la cantidad que quiera dar ese día: ");
         comprobarCantidadComida(dosisDiaStopIncremento);
-        int dosisDia30=Comprobaciones.leerInt("Introduce la cantidad final (dia 30): ");
-        comprobarCantidadComida(dosisDia30);
-        Dosis d = new Dosis(cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDia30);
+        long dosisDiaFinal=Comprobaciones.leerLong("Introduce la cantidad final (dia " + duracionDias +"): ");
+        comprobarCantidadComida(dosisDiaFinal);
+        Dosis d = new Dosis(duracionDias,cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDiaFinal);
         return d;
     }
 
@@ -45,20 +46,22 @@ public class Salida{
     }
 
     public Dosis DatosModificarDosis(Dosis dosis)throws ExceptionCantidad{
-        int cantidadInicial=Comprobaciones.leerInt("Introduce la nueva cantidad inicial de comida: ");
+        int duracionDias=Comprobaciones.leerInt("Introduce la nueva duración de la dosis en días: ");
+        dosis.setDuracionDias(duracionDias);
+        long cantidadInicial=Comprobaciones.leerLong("Introduce la nueva cantidad inicial de comida: ");
         comprobarCantidadComida(cantidadInicial);
         dosis.setCantidadInicial(cantidadInicial);
     
         int diaStopIncremento= Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
-                    " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
+                    " incrementar la dosis (De entre los " + dosis.getDuracionDias() +" días que dura el exeprimento): ");
         dosis.setDiaStopIncremento(diaStopIncremento);
 
-        int dosisDiaStopIncremento=Comprobaciones.leerInt("Introduce la cantidad que quiera dar ese día: ");
+        long dosisDiaStopIncremento=Comprobaciones.leerLong("Introduce la cantidad que quiera dar ese día: ");
         comprobarCantidadComida(dosisDiaStopIncremento);
         dosis.setDosisDiaStopIncremento(dosisDiaStopIncremento);
-        int dosisDia30=Comprobaciones.leerInt("Introduce la cantidad final (dia 30): ");
-        comprobarCantidadComida(dosisDia30);
-        dosis.setDosisDia30(dosisDia30);
+        long dosisDiaFinal=Comprobaciones.leerLong("Introduce la cantidad final (dia " + dosis.getDuracionDias() + "): ");
+        comprobarCantidadComida(dosisDiaFinal);
+        dosis.setDosisDia30(dosisDiaFinal);
         return dosis;
     }
 

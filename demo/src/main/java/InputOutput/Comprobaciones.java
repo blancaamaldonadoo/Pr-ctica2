@@ -51,6 +51,24 @@ public class Comprobaciones {
         return numero;  
     }
 
+    
+    public static long leerLong(String l){
+        long numero=0;
+        BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
+        System.out.println(l);
+        try {
+            numero=Long.parseLong(teclado.readLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Número no válido");
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            System.out.println("Error al leer el número");
+            e.printStackTrace();
+        }
+        return numero;  
+    }
+
     public static LocalDate leerFecha(String f){
         LocalDate fecha=null;
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
