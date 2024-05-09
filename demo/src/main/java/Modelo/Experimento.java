@@ -32,8 +32,7 @@ public class Experimento {
     public void setPoblaciones(ArrayList<Poblacion> poblaciones){
         this.poblaciones = poblaciones;
     }
-
-
+    
     public void verDetallesPoblacion(Poblacion p){
         if(poblaciones.contains(p))
         System.out.println(p.toString());

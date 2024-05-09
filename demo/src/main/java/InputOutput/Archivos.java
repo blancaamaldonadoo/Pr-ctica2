@@ -53,7 +53,7 @@ public class Archivos implements ManejadorArchivos{
 
     }
 
-    public File getFileOfExperiment(Experimento e){
+    public Archivo getFileOfExperiment(Experimento e){
         File f = null;
         for(Archivos a: listaArchivos){
             if(a.getExperimento().equals(e)) f = a.getarch();
