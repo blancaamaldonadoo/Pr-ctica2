@@ -4,6 +4,7 @@ import java.io.*;
 
 import Controlador.Laboratorio;
 import Excepciones.ExceptionCantidad;
+import InputOutput.Archivos;
 import InputOutput.Comprobaciones;
 import Modelo.Experimento;
 import Modelo.Poblacion;
@@ -90,6 +91,7 @@ public class Main{
             }
 
             case 7:{
+                
                 break;
             }
 
@@ -106,26 +108,4 @@ public class Main{
 
     }
 
-    public static Experimento abrirArchivo(File file) throws IOException{
-        FileInputStream fileInputStream =null;
-        InputStreamReader inputStreamReader = null;
-        BufferedReader bufferedReader = null;
-        try{
-            fileInputStream = new FileInputStream(file);
-            inputStreamReader = new InputStreamReader(fileInputStream);
-            bufferedReader = new BufferedReader(inputStreamReader);
-        }catch(FileNotFoundException e){
-            System.out.println("Error al abrir el archivo");
-            e.printStackTrace();
-        }catch(IOException e){
-            System.out.println("Error al leer el archivo");
-            e.printStackTrace();
-        }
-        String linea="";
-        /*try{
-            linea=BufferedReader.readLine(); CONTINUAR.......
-
-        }*/
-        return null;
-    }
 }

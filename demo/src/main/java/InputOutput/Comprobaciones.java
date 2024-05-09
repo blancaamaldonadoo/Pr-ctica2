@@ -96,4 +96,18 @@ public class Comprobaciones {
         }   
         return nivelLuz;
     }
+
+    public static Archivos leerArchivo(String a){
+        Archivos archivo=null;
+        BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
+        System.out.println(a);
+        try {
+            File file= new File(teclado.readLine());
+            archivo= new Archivos(file);
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo");
+            e.printStackTrace();
+        }
+        return archivo;
+    }
 }

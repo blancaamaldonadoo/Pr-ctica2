@@ -1,4 +1,5 @@
 package Modelo;
+import java.io.File;
 import java.util.*;
 
 import Excepciones.ExceptionCantidad;
@@ -8,7 +9,7 @@ public class Experimento {
 
     private String nombre;
     private ArrayList<Poblacion> poblaciones;
-
+    
     public Experimento(){
         this.poblaciones = new ArrayList<Poblacion>();
     }
@@ -31,6 +32,7 @@ public class Experimento {
     public void setPoblaciones(ArrayList<Poblacion> poblaciones){
         this.poblaciones = poblaciones;
     }
+
 
     public void verDetallesPoblacion(Poblacion p){
         if(poblaciones.contains(p))
