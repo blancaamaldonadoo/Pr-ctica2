@@ -82,8 +82,8 @@ public class Poblacion extends Experimento{
     }
 
     public void crearDosis() throws ExceptionCantidad{
-        Salida salida= new Salida(); //es mejor crear un atributo privado de salida???
-        salida.pedirDatosDosis();
+        Salida salida= new Salida(); 
+        salida.opcionesDosis();
     }
 
     public void modificarDosis(Dosis dosis) throws ExceptionCantidad{

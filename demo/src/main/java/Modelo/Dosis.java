@@ -5,11 +5,11 @@ import Excepciones.ExceptionCantidad;
 
 public class Dosis{
 
-    private int duracionDias;
-    private long cantidadInicial;
-    private int diaStopIncremento;
+    private int duracionDias=0;
+    private long cantidadInicial=0;
+    private int diaStopIncremento=0;
     private long dosisDiaStopIncremento;
-    private long dosisDiaFinal;
+    private long dosisDiaFinal=0;
     
     private long cantidadConstante=0;
 
@@ -25,9 +25,15 @@ public class Dosis{
         this.dosisDiaFinal = dosisDiaFinal;
     }
 
-    public Dosis(long cantidadConstante, int duracionDias){
-        this.cantidadConstante=cantidadConstante;
+    public Dosis(int duracionDias, long cantidadConstante){
         this.duracionDias=duracionDias;
+        this.cantidadConstante=cantidadConstante;
+    }
+
+    public Dosis(int duracionDias, long cantidadInicial, long dosisDiaFinal){
+        this.duracionDias=duracionDias;
+        this.cantidadInicial=cantidadInicial;
+        this.dosisDiaFinal=dosisDiaFinal;
     }
 
     public int getDuracionDias(){
@@ -59,6 +65,12 @@ public class Dosis{
     }
     public void setDosisDia30(long dosisDiaFinal){
         this.dosisDiaFinal = dosisDiaFinal;
+    }
+    public long getCantidadConstante(){
+        return cantidadConstante;
+    }
+    public void setCantidadConstante(long cantidadConstante){
+        this.cantidadConstante=cantidadConstante;
     }
 
     public String toString(){
@@ -95,6 +107,23 @@ public class Dosis{
         return dosis;
     }
 
-    
+    public Long calcularDosisInicioFin(int dia) throws ExceptionCantidad {
+        long dosis=0;
+        if(dosisDiaFinal<cantidadInicial) throw new ExceptionCantidad("La cantidad final tiene que ser mayor que la inicial");
+        else{
+            double incremento= (dosisDiaFinal-cantidadInicial)/(double)duracionDias;
+            dosis= ((long)incremento* dia) + cantidadInicial;
+        }
+        return dosis;
+    }
 
+    public long calcularDosisIntermitente(int dia) throws ExcepcionDiaDosis{
+        long dosis=0;
+        if(dia>duracionDias) throw new ExcepcionDiaDosis("El día no entra dentro del rango establecido");
+        if(dia<0) throw new IllegalArgumentException("El día no puede ser negativo.");
+        if(dia%2==0){
+            dosis= cantidadConstante;
+        }
+        return dosis;
+    }
 }
