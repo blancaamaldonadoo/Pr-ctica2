@@ -1,10 +1,12 @@
 package Interfaces;
 
+import java.io.File;
+
 import Modelo.Experimento;
 
 public interface ManejadorArchivos {
     public void guardarComo(Experimento e);
-    public Archivo getFileOfExperiment(Experimento e);
-    public void guardar();
+    public File getFileOfExperiment(Experimento e);
+    public void guardar(Experimento e);
     
 }

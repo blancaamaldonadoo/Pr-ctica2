@@ -10,7 +10,8 @@ public class Dosis{
     private int diaStopIncremento;
     private long dosisDiaStopIncremento;
     private long dosisDiaFinal;
-
+    
+    private long cantidadConstante=0;
 
     public Dosis( int duracionDias, long cantidadInicial, int diaStopIncremento, long dosisDiaStopIncremento, long dosisDiaFinal) throws ExceptionCantidad{
         this.duracionDias = duracionDias;
@@ -22,6 +23,11 @@ public class Dosis{
         this.dosisDiaStopIncremento = dosisDiaStopIncremento;
        
         this.dosisDiaFinal = dosisDiaFinal;
+    }
+
+    public Dosis(long cantidadConstante, int duracionDias){
+        this.cantidadConstante=cantidadConstante;
+        this.duracionDias=duracionDias;
     }
 
     public int getDuracionDias(){
@@ -58,12 +64,14 @@ public class Dosis{
     public String toString(){
         String texto="";
         texto+="La dosis dura: "+duracionDias+" días\n";
+        if(cantidadConstante==0){
         texto+="Cantidad inicial: "+cantidadInicial+"\n";
         texto+="Dia de fin de incremento: "+diaStopIncremento+"\n";
         texto+="Dosis de fin de incremento: "+dosisDiaStopIncremento+"\n";
         texto+="Dosis del dia 30: "+dosisDiaFinal+"\n";
+        }
+        else texto+= "Cantidad de comida constante: " + cantidadConstante;
         return texto;
-
     }
 
     public long calcularDosis(int dia) throws ExcepcionDiaDosis, IllegalArgumentException{
@@ -86,5 +94,7 @@ public class Dosis{
         }
         return dosis;
     }
+
+    
 
 }

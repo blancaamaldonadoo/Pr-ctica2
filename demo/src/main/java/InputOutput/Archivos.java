@@ -1,9 +1,11 @@
 package InputOutput;
 
 import java.io.*;
+import java.util.*;
 
 import Interfaces.ManejadorArchivos;
 import Modelo.Experimento;
+import Modelo.Poblacion;
 
 public class Archivos implements ManejadorArchivos{
     private File archivo;
@@ -15,7 +17,7 @@ public class Archivos implements ManejadorArchivos{
     }
 
     public Archivos(File archivo){
-        this.archivo=file;
+        this.archivo=archivo;
     }
 
     public File getarch(){
@@ -29,7 +31,7 @@ public class Archivos implements ManejadorArchivos{
     public void guardarComo(Experimento e){
         String nombre= e.getNombre();
         String ruta= nombre+".txt";
-        File archivo = new File(ruta.getAbsolutePath(), nombre);
+        File archivo = new File(ruta, nombre);
         //comprobar que no se haya guardado ya antes:
         while(archivo.exists()){
            System.out.println("El archivo ya ha sido previamente guardado, por favor, seleccione la opción de guardar. ");
@@ -53,7 +55,7 @@ public class Archivos implements ManejadorArchivos{
 
     }
 
-    public Archivo getFileOfExperiment(Experimento e){
+    public File getFileOfExperiment(Experimento e){
         File f = null;
         for(Archivos a: listaArchivos){
             if(a.getExperimento().equals(e)) f = a.getarch();
@@ -70,15 +72,31 @@ public class Archivos implements ManejadorArchivos{
             BufferedWriter bw= new BufferedWriter(writer)){
                 bw.write(e.toString());
                 bw.close();
+            }catch(IOException ex){
+                System.out.println("Error al guardar el archivo");
+                ex.printStackTrace();
             }
         }
-
     }
 
-    public Experimento abrirArchivo(){
-
-
+    public Experimento abrirArchivo(String nombre){
+        File f= new File(nombre);
+        Experimento e=null;
+        
+        if(f.exists()){
+            try{
+                FileReader reader= new FileReader(f);
+                String nombreExp= Comprobaciones.leerString("Introduce el nombre del experimento: ");
+                e= new Experimento(nombreExp, new ArrayList<Poblacion>());
+                
+            }catch(IOException ex){
+                System.out.println("Error al abrir el archivo");
+                ex.printStackTrace();
+            }
+        }
+        return e;
     }
+
 
 
 }

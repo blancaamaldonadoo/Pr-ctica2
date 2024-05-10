@@ -6,7 +6,7 @@ import Excepciones.ExceptionCantidad;
 import Modelo.*;
 
 public class Salida{
-    
+    private Salida salida;
     public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
         String nombre= Comprobaciones.leerString("Introduce el nombre de la población: ");
         LocalDate fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de incio: ");
@@ -22,6 +22,20 @@ public class Salida{
     public void comprobarCantidadComida(long cantidad) throws ExceptionCantidad{
         if(cantidad>=300000 || cantidad<=0){
             throw new ExceptionCantidad("La cantidad inicial debe ser un número entero menor de 300000 miligramos");
+        }
+    }
+
+    public void opcionesDosis() throws ExceptionCantidad{
+        System.out.println("Introduce el tipo de dosis que quieras emplear: ");
+        int opcion= Comprobaciones.leerInt("1) Incremento lineal de comida seguido de un decremento lineal a partir del día x. "+ 
+        "\n2) Dosis constante durante x días de experimento. \n3) Dosis linealmente creciente hasta x valor de comida." +
+        "\n4) Porporcionar comida intermitente (día sí, día no). ");
+        switch(opcion){
+            case 1: {
+                salida.pedirDatosDosis();
+            }
+            case 2:
+            case 3:     
         }
     }
 
