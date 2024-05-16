@@ -1,5 +1,4 @@
 package Modelo;
-import java.io.File;
 import java.util.*;
 
 import Excepciones.ExceptionCantidad;

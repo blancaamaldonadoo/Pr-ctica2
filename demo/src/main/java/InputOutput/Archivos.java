@@ -88,7 +88,7 @@ public class Archivos implements ManejadorArchivos{
                 FileReader reader= new FileReader(f);
                 String nombreExp= Comprobaciones.leerString("Introduce el nombre del experimento: ");
                 e= new Experimento(nombreExp, new ArrayList<Poblacion>());
-                
+                reader.close();
             }catch(IOException ex){
                 System.out.println("Error al abrir el archivo");
                 ex.printStackTrace();

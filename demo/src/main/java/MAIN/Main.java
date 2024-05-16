@@ -4,7 +4,6 @@ import java.io.*;
 
 import Controlador.Laboratorio;
 import Excepciones.ExceptionCantidad;
-import InputOutput.Archivos;
 import InputOutput.Comprobaciones;
 import Modelo.Experimento;
 import Modelo.Poblacion;
@@ -64,6 +63,7 @@ public class Main{
 
             case 4:{
                 Experimento experimento= Laboratorio.getExperimentoActual();
+                MainOrden.MenuOrden();
                 experimento.visualizarNombresPoblaciones();
                 break;
             }
