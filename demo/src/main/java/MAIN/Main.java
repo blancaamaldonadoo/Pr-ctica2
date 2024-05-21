@@ -63,7 +63,7 @@ public class Main{
 
             case 4:{
                 Experimento experimento= Laboratorio.getExperimentoActual();
-                MainOrden.MenuOrden();
+                MainOrden.MenuOrden(experimento.getPoblaciones());
                 experimento.visualizarNombresPoblaciones();
                 break;
             }
