@@ -38,7 +38,8 @@ public class Ordenaciones {
 		datos[pos2] = aux;
 	}
     
-    public static void ordenNumBacterias(float [] numBacterias){
+    public static void ordenNumBacterias(ArrayList<Poblacion> poblaciones){
+        float [] numBacterias = new float[poblaciones.size()];
         for(int i = 0; i< numBacterias.length-1; i++) {
             for(int j = 0; j<numBacterias.length-1-i; j++) {
                 if(numBacterias[j] > (numBacterias[j+1]));
