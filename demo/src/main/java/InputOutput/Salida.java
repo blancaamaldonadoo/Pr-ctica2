@@ -26,7 +26,6 @@ public class Salida{
     }
 
     public void opcionesDosis() throws ExceptionCantidad{
-        Dosis dosis= null;
         System.out.println("Introduce el tipo de dosis que quieras emplear: ");
         int opcion= Comprobaciones.leerInt("1) Incremento lineal de comida seguido de un decremento lineal a partir del día x. "+ 
         "\n2) Dosis constante durante x días de experimento. \n3) Dosis linealmente creciente hasta x valor de comida." +

@@ -58,6 +58,22 @@ public class Experimento {
         }
     }
 
+    public Poblacion buscarPoblacion(String nombre){
+        Poblacion pob=null;
+        if(poblaciones.isEmpty()){
+            System.out.println("No hay poblaciones en el experimento");
+        }
+        else{
+        for(Poblacion p: poblaciones){
+            if(p.getNombre().equals(nombre)){
+                pob=p;
+                return pob;
+            }
+        }
+    }
+        return pob;
+    }
+
     public void modificarPoblacion(Poblacion p){
     }
 

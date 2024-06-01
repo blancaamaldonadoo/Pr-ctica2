@@ -1,4 +1,4 @@
-package MAIN;
+package Main;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,8 @@ public class MainOrden {
             }
 
             default:{
-
+                System.out.println("Opción no válida, por favor, elija una opción válida.");
+                MenuOrden(poblaciones);
                 break;
             }
 

@@ -1,14 +1,17 @@
 package Controlador;
+import java.io.IOException;
 import java.util.*;
 
 import Excepciones.ExceptionCantidad;
 import InputOutput.*;
+import Interfaces.ManejadorExperimentos;
 import Modelo.*;
 
 
 public class Laboratorio {
- 
+
     private ArrayList<Experimento> experimentos;
+    private ManejadorExperimentos expManager;
     private Experimento experimentoActual;
 
     public Laboratorio(){
@@ -24,6 +27,10 @@ public class Laboratorio {
         this.experimentos = experimentos;
     }
 
+    public ManejadorExperimentos getexpManager(){
+        return expManager;
+    }
+
     public Experimento getExperimentoActual(){
         return experimentoActual;
     }
@@ -32,13 +39,15 @@ public class Laboratorio {
         this.experimentoActual = experimentoActual;
     }
     
-    public void crearExperimento() throws ExceptionCantidad{
-        //createNewFile();
+    public void crearExperimento() throws ExceptionCantidad, IOException{
         Salida salida = new Salida();
-        salida.pedirDatosExperimentos();
+        Experimento e= salida.pedirDatosExperimentos();
+        experimentos.add(e);
+        experimentoActual=e;    
+        System.out.println("Bienvenido al experimento: '" +e.getNombre() + "'");
     }
 
-    public Experimento CambiarNombreExperimento(Experimento experimento){
+    public Experimento cambiarNombreExperimento(Experimento experimento){
         String nombre=Comprobaciones.leerString("Introduce el nuevo nombre del Experimento: ");
         if(nombre.isEmpty()){
             System.out.println("No se ha introducido ningún nombre");
