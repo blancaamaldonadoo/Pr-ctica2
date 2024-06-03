@@ -2,20 +2,23 @@ package InputOutput;
 import java.time.LocalDate;
 import java.util.*;
 
+import Excepciones.ExcepcionDiaDosis;
 import Excepciones.ExceptionCantidad;
 import ClasesLab.*;
 
 public class Salida{
-    private Salida salida;
+
     public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
         String nombre= Comprobaciones.leerString("Introduce el nombre de la población: ");
-        LocalDate fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de incio: ");
-        LocalDate fechaFin=Comprobaciones.leerFecha("Introduce la fecha de fin: ");
+        LocalDate fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de incio (yyyy-MM-dd): ");
+        LocalDate fechaFin=Comprobaciones.leerFecha("Introduce la fecha de fin (yyyy-MM-dd): ");
         int numBacteriasIniciales= Comprobaciones.leerInt("Introduce el número de bacterias iniciales: ");
         double temperatura= Comprobaciones.leerDouble("Introduce la temperatura: ");
         Luminosidad nivelLuz=Comprobaciones.leerLuminosidad("Introduce el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
-        System.out.println("Para la dosis de comida: ");
-        Poblacion p = new Poblacion(nombre, fechaInicio, fechaFin, numBacteriasIniciales, temperatura, nivelLuz, pedirDatosDosis());
+        System.out.println("\nPara la dosis de comida: ");
+        Poblacion p = new Poblacion(nombre, fechaInicio, fechaFin, numBacteriasIniciales, temperatura, nivelLuz, opcionesDosis());
+        System.out.println("Población creada con éxito");
+        System.out.println(p);
         return p;
     }
 
@@ -25,29 +28,32 @@ public class Salida{
         }
     }
 
-    public void opcionesDosis() throws ExceptionCantidad{
+    public Dosis opcionesDosis() throws ExceptionCantidad{
         System.out.println("Introduce el tipo de dosis que quieras emplear: ");
         int opcion= Comprobaciones.leerInt("1) Incremento lineal de comida seguido de un decremento lineal a partir del día x. "+ 
         "\n2) Dosis constante durante x días de experimento. \n3) Dosis linealmente creciente hasta x valor de comida." +
         "\n4) Porporcionar comida intermitente (día sí, día no). ");
+        Dosis d;
         switch(opcion){
+
             case 1: {
-                salida.pedirDatosDosis();
-                break;
+                d = pedirDatosDosis();
+                return d;
             }
             case 2:{
-                salida.pedirDatosDosisConstante();
-                break;
+                d= pedirDatosDosisConstante();
+                return d;
             }
             case 3:{
-                salida.pedirDatosDosisInicioFin();
-                break;
+                d= pedirDatosDosisInicioFin();
+                return d;
             }
             case 4: {
-                salida.pedirDatosDosisIntermitente();
-                break;
+                d= pedirDatosDosisIntermitente();
+                return d;
             }      
         }
+        return null;
     }
 
     public Dosis pedirDatosDosis()throws ExceptionCantidad{
@@ -65,21 +71,38 @@ public class Salida{
     }
 
     public Dosis pedirDatosDosisConstante() throws ExceptionCantidad{
-        int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
+        int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis (días): ");
         long cantidadConstante=Comprobaciones.leerLong("Introduce una cantidad constante de comida (mg)");
         comprobarCantidadComida(cantidadConstante);
         Dosis d= new Dosis(duracionDias, cantidadConstante);
         return d;
     }
 
+    public ArrayList<Long> calcularDosisConstante(Dosis d) throws IllegalArgumentException, ExcepcionDiaDosis{
+        ArrayList<Long> listDosis= new ArrayList<Long>();
+        for(int i=0; i<d.calcularDosisConstante(i); i++){
+            listDosis.add(d.getCantidadConstante());
+        }
+        return listDosis;
+    }
+
     public Dosis pedirDatosDosisInicioFin() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
         long cantidadInicial=Comprobaciones.leerLong("Introduce la cantidad de comida del día incial (mg)");
         comprobarCantidadComida(cantidadInicial);
-        long dosisDiaFinal=Comprobaciones.leerLong("Introduce la cantidad de comida del último día (dia "+ duracionDias+") (mg)");
-        comprobarCantidadComida(dosisDiaFinal);
-        Dosis d= new Dosis(duracionDias, cantidadInicial, dosisDiaFinal);
+        long dosisDiaStop=Comprobaciones.leerLong("Introduce la cantidad límite para detener la dosis (mg)");
+        comprobarCantidadComida(dosisDiaStop);
+        Dosis d= new Dosis(duracionDias, cantidadInicial, dosisDiaStop);
+        calcularDosisInicioFin(d);
         return d;
+    }
+
+    public ArrayList<Long> calcularDosisInicioFin(Dosis d) throws ExceptionCantidad{
+        ArrayList<Long> listDosis= new ArrayList<Long>();
+        for(int i=0; i<d.getDuracionDias(); i++){
+            listDosis.add(d.calcularDosisInicioFin(i));
+        }
+        return listDosis;
     }
 
     public Dosis pedirDatosDosisIntermitente() throws ExceptionCantidad{
@@ -88,6 +111,14 @@ public class Salida{
         comprobarCantidadComida(cantidadConstante);
         Dosis d= new Dosis(duracionDias, cantidadConstante);
         return d;
+    }
+
+    public ArrayList<Long> calcularDosisIntermitente(Dosis d) throws ExcepcionDiaDosis{
+        ArrayList<Long> listDosis= new ArrayList<Long>();
+        for(int i=0; i<d.getDuracionDias(); i++){
+            listDosis.add(d.calcularDosisIntermitente(i));
+        }
+        return listDosis;
     }
 
     public Experimento pedirDatosExperimentos(){

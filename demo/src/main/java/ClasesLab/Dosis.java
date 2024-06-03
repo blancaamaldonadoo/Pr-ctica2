@@ -74,7 +74,7 @@ public class Dosis{
     }
 
     public String toString(){
-        String texto="";
+        String texto="\n";
         texto+="La dosis dura: "+duracionDias+" días\n";
         if(cantidadConstante==0){
         texto+="Cantidad inicial: "+cantidadInicial+"\n";
@@ -86,7 +86,7 @@ public class Dosis{
         return texto;
     }
 
-    public long calcularDosis(int dia) throws ExcepcionDiaDosis, IllegalArgumentException{
+    public long calcularDosisConstante(int dia) throws ExcepcionDiaDosis, IllegalArgumentException{
         long dosis=0;
         if (dia>duracionDias){
             throw new ExcepcionDiaDosis("El día no puede ser mayor a la duración del experimento.");

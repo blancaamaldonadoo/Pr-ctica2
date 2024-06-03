@@ -42,7 +42,7 @@ public class Experimento implements Interfaces.ManejadorExperimentos {
     public Poblacion crearPoblacion() throws ExceptionCantidad{
        Salida salida= new Salida();
        Poblacion p= salida.pedirDatosPoblacion();
-        return p;
+       return p;
     }
     
     public String visualizarNombresPoblaciones(){
@@ -72,9 +72,6 @@ public class Experimento implements Interfaces.ManejadorExperimentos {
         }
     }
         return pob;
-    }
-
-    public void modificarPoblacion(Poblacion p){
     }
 
     public void addPoblacion(Poblacion p){

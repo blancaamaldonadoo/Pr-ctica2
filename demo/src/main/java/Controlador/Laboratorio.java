@@ -9,9 +9,11 @@ public class Laboratorio implements Interfaces.ManejadorLaboratorio{
 
     private ArrayList<Experimento> experimentos;
     private Experimento experimentoActual;
+    private ArrayList<Archivos> archivos;
 
     public Laboratorio(){
         this.experimentoActual=null;
+        this.archivos= new ArrayList<Archivos>();
         this.experimentos = new ArrayList<Experimento>();
     }
 
@@ -23,6 +25,10 @@ public class Laboratorio implements Interfaces.ManejadorLaboratorio{
         this.experimentos = experimentos;
     }
 
+    public ArrayList<Archivos> getArchivos(){
+        return archivos;
+    }
+
     public Experimento getExperimentoActual(){
         return experimentoActual;
     }
@@ -31,12 +37,17 @@ public class Laboratorio implements Interfaces.ManejadorLaboratorio{
         this.experimentoActual = experimentoActual;
     }
     
-    public void crearExperimento(){
+    public void addArchivo(Archivos a){
+        this.archivos.add(a);
+    }
+    
+    public Experimento crearExperimento(){
         Salida salida = new Salida();
         Experimento e= salida.pedirDatosExperimentos();
         experimentos.add(e);
         experimentoActual=e;    
         System.out.println("Bienvenido al experimento: '" +e.getNombre() + "'");
+        return e;
     }
 
     public Experimento cambiarNombreExperimento(Experimento experimento){

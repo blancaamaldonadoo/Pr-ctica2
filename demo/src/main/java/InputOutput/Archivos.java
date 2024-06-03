@@ -2,15 +2,15 @@ package InputOutput;
 
 import java.io.*;
 import java.util.*;
-
-import Interfaces.ManejadorArchivos;
 import ClasesLab.Experimento;
 import ClasesLab.Poblacion;
+import Controlador.Laboratorio;
 
-public class Archivos implements ManejadorArchivos{
+public class Archivos extends Laboratorio{
+
     private File archivo;
     private Experimento experimento;
-    private ArrayList<Archivos> listaArchivos = new ArrayList<Archivos>();
+
     public Archivos(File archivo, Experimento experimento) {
         this.archivo=archivo;
         this.experimento = experimento;
@@ -51,13 +51,13 @@ public class Archivos implements ManejadorArchivos{
         }
         
         Archivos Arch= new Archivos(archivo, experimento);
-        listaArchivos.add(Arch);
+        addArchivo(Arch);
 
     }
 
     public File getFileOfExperiment(Experimento e){
         File f = null;
-        for(Archivos a: listaArchivos){
+        for(Archivos a: getArchivos()){
             if(a.getExperimento().equals(e)) f = a.getarch();
         }
         return f;

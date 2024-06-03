@@ -74,8 +74,7 @@ public class Comprobaciones {
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
         System.out.println(f);
         try {
-            fecha=LocalDate.parse(teclado.readLine());
-            DateTimeFormatter tipo= DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter tipo= DateTimeFormatter.ofPattern("yyyy-MM-dd");
             fecha= LocalDate.parse(teclado.readLine(), tipo);
         } catch (IOException e) {
             System.out.println("Error al leer la fecha");

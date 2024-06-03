@@ -4,26 +4,23 @@ import java.util.ArrayList;
 import Excepciones.ExceptionCantidad;
 import InputOutput.Comprobaciones;
 import InputOutput.Ordenaciones;
-import Interfaces.ManejadorArchivos;
-import Interfaces.ManejadorExperimentos;
-import Interfaces.ManejadorLaboratorio;
 import ClasesLab.Experimento;
 import ClasesLab.Poblacion;
+import Controlador.Laboratorio;
 
 
 public class Main{
 
-    private static ManejadorLaboratorio labManager;
-    private static ManejadorExperimentos expManager;
-    private static ManejadorArchivos fileManager;
+    private static Laboratorio laboratorio;
 
     public static void main(String[] args) throws IOException, ExceptionCantidad {
+        laboratorio = new Laboratorio();
+        System.out.println("\n¡Bienvenido al laboratorio de bacterias!");
         menuPrincipal();
     }
 
     public static void menuPrincipal() throws ExceptionCantidad{
-        System.out.println("\n¡Bienvenido al laboratorio de bacterias!");
-        System.out.println("Elige una opción: ");
+        System.out.println("\nElige una opción: ");
         System.out.println("1. Abrir un experimento ");
         System.out.println("2. Crear un nuevo experimento ");
 
@@ -36,8 +33,9 @@ public class Main{
                 }
     
                 case 2:{
-                    labManager.crearExperimento();
-                    menuExperimento();
+                    Experimento e= laboratorio.crearExperimento();
+                    laboratorio.setExperimentoActual(e);
+                    menuExperimento(e);
                     break;
                 }
     
@@ -54,8 +52,8 @@ public class Main{
         File f= new File(nombre);
         Experimento experimento=null;
         if(f.exists()){
-            experimento= fileManager.abrirArchivo(f);
-            labManager.addExperimento(experimento);
+            //experimento= abrirArchivo(f);
+            //addExperimento(experimento);
         }
         else{
             System.out.println("El archivo no existe");
@@ -63,8 +61,8 @@ public class Main{
         }
     }
 
-    public static void menuExperimento() throws ExceptionCantidad{
-        System.out.println("Elige una opción: ");
+    public static void menuExperimento(Experimento e) throws ExceptionCantidad{
+        System.out.println("\nElige una opción: ");
         System.out.println("1. Crear una población de bacterias y añadirla al experimento actual");
         System.out.println("2. Visualizar los nombres de todas las poblaciones de bacterias");
         System.out.println("3. Borrar una población de bacterias");
@@ -77,17 +75,20 @@ public class Main{
         switch(opcion){
                 
                 case 1:{
-                    expManager.crearPoblacion();
+                    Poblacion p = e.crearPoblacion();
+                    laboratorio.getExperimentoActual().addPoblacion(p);
+                    menuExperimento(e);
                     break;
                 }
     
                 case 2:{
-                    visualizarNombresPoblaciones();
+                    visualizarNombresPoblaciones(e);
                     break;
                 }
     
                 case 3:{
                     borrarPoblacion();
+                    menuExperimento(e);
                     break;
                 }
     
@@ -97,12 +98,12 @@ public class Main{
                 }
     
                 case 5:{
-                    fileManager.guardar(labManager.getExperimentoActual());
+                    //fileManager.guardar(labManager.getExperimentoActual());
                     break;
                 }
     
                 case 6:{
-                    fileManager.guardarComo(labManager.getExperimentoActual());
+                    //fileManager.guardarComo(labManager.getExperimentoActual());
                     break;
                 }
     
@@ -118,24 +119,25 @@ public class Main{
         }
     }
 
-    public static void visualizarNombresPoblaciones(){
+    public static void visualizarNombresPoblaciones(Experimento e){
         ArrayList<Poblacion> poblaciones = new ArrayList<Poblacion>();
+        poblaciones= e.getPoblaciones();
         menuOrden(poblaciones);
-        expManager.visualizarNombresPoblaciones();
     }
 
     public static void borrarPoblacion(){
         System.out.println("Introduce el nombre de la población que quieres borrar: ");
         String nombre = Comprobaciones.leerString("");
-        Poblacion p= expManager.buscarPoblacion(nombre);
-        expManager.eliminarPoblacion(p);
+        Poblacion p= laboratorio.getExperimentoActual().buscarPoblacion(nombre);
+        laboratorio.getExperimentoActual().eliminarPoblacion(p);
     }
 
-    public static void verDetallesPoblacion(){
+    public static void verDetallesPoblacion() throws ExceptionCantidad{
         System.out.println("Introduce el nombre de la población de la que quieres ver los detalles: ");
         String nombre = Comprobaciones.leerString("");
-        Poblacion p= expManager.buscarPoblacion(nombre);
-        expManager.verDetallesPoblacion(p);
+        Poblacion p= laboratorio.getExperimentoActual().buscarPoblacion(nombre);
+        laboratorio.getExperimentoActual().verDetallesPoblacion(p);
+        menuPrincipal();
     }
 
     public static void menuOrden(ArrayList<Poblacion> poblaciones){
@@ -149,17 +151,17 @@ public class Main{
         switch(opcion){
 
             case 1:{
-                Ordenaciones.ordenCronologico(poblaciones);
+                System.out.println(Ordenaciones.ordenCronologico(poblaciones));
                 break;
             }
 
             case 2:{
-                Ordenaciones.ordenNombrePoblacion(poblaciones);
+                System.out.println(Ordenaciones.ordenNombrePoblacion(poblaciones));
                 break;
             }
 
             case 3:{
-                Ordenaciones.ordenNumBacterias(poblaciones);
+                System.out.println(Ordenaciones.ordenNumBacterias(poblaciones));
                 break;
             }
 
