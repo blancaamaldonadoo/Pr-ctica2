@@ -1,10 +1,10 @@
-package Modelo;
+package ClasesLab;
 import java.util.*;
 
 import Excepciones.ExceptionCantidad;
 import InputOutput.Salida;
 
-public class Experimento {
+public class Experimento implements Interfaces.ManejadorExperimentos {
 
     private String nombre;
     private ArrayList<Poblacion> poblaciones;

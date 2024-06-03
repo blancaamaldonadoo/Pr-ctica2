@@ -1,4 +1,4 @@
-package Modelo;
+package ClasesLab;
 import java.time.LocalDate;
 
 import Excepciones.ExceptionCantidad;
@@ -22,6 +22,11 @@ public class Poblacion extends Experimento{
         this.temperatura = temperatura;
         this.dosis=dosis;
         this.nivelLuz = nivelLuz;
+    }
+
+    public Poblacion(String nombre, int numBacteriasIniciales){
+        this.nombre=nombre;
+        this.numBacteriasIniciales=numBacteriasIniciales;
     }
 
     public String getNombre(){

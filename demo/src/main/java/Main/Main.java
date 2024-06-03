@@ -1,20 +1,22 @@
 package Main;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-
 import Excepciones.ExceptionCantidad;
 import InputOutput.Comprobaciones;
 import InputOutput.Ordenaciones;
+import Interfaces.ManejadorArchivos;
 import Interfaces.ManejadorExperimentos;
 import Interfaces.ManejadorLaboratorio;
-import Modelo.Poblacion;
+import ClasesLab.Experimento;
+import ClasesLab.Poblacion;
 
 
 public class Main{
 
     private static ManejadorLaboratorio labManager;
     private static ManejadorExperimentos expManager;
+    private static ManejadorArchivos fileManager;
+
     public static void main(String[] args) throws IOException, ExceptionCantidad {
         menuPrincipal();
     }
@@ -29,7 +31,7 @@ public class Main{
         switch(opcion){
                 
                 case 1:{
-                    //abrirArchivo();
+                    abrirArchivo();
                     break;
                 }
     
@@ -43,6 +45,21 @@ public class Main{
                     System.out.println("Opción no válida");
                     break;
                 }
+        }
+    }
+
+    public static void abrirArchivo() throws ExceptionCantidad{
+        System.out.println("Introduce el nombre del archivo que quieres abrir: ");
+        String nombre = Comprobaciones.leerString("");
+        File f= new File(nombre);
+        Experimento experimento=null;
+        if(f.exists()){
+            experimento= fileManager.abrirArchivo(f);
+            labManager.addExperimento(experimento);
+        }
+        else{
+            System.out.println("El archivo no existe");
+            menuPrincipal();
         }
     }
 
@@ -80,12 +97,12 @@ public class Main{
                 }
     
                 case 5:{
-                    //guardar();
+                    fileManager.guardar(labManager.getExperimentoActual());
                     break;
                 }
     
                 case 6:{
-                    //guardarComo();
+                    fileManager.guardarComo(labManager.getExperimentoActual());
                     break;
                 }
     
@@ -102,7 +119,7 @@ public class Main{
     }
 
     public static void visualizarNombresPoblaciones(){
-        ArrayList<Poblacion> poblaciones = 
+        ArrayList<Poblacion> poblaciones = new ArrayList<Poblacion>();
         menuOrden(poblaciones);
         expManager.visualizarNombresPoblaciones();
     }
@@ -148,7 +165,7 @@ public class Main{
 
             default:{
                 System.out.println("Opción no válida, por favor, elija una opción válida.");
-                MenuOrden(poblaciones);
+                menuOrden(poblaciones);
                 break;
             }
         }

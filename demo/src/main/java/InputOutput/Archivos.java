@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 
 import Interfaces.ManejadorArchivos;
-import Modelo.Experimento;
-import Modelo.Poblacion;
+import ClasesLab.Experimento;
+import ClasesLab.Poblacion;
 
 public class Archivos implements ManejadorArchivos{
     private File archivo;
@@ -79,24 +79,41 @@ public class Archivos implements ManejadorArchivos{
         }
     }
 
-    public Experimento abrirArchivo(String nombre){
-        File f= new File(nombre);
-        Experimento e=null;
-        
-        if(f.exists()){
-            try{
-                FileReader reader= new FileReader(f);
-                String nombreExp= Comprobaciones.leerString("Introduce el nombre del experimento: ");
-                e= new Experimento(nombreExp, new ArrayList<Poblacion>());
-                reader.close();
-            }catch(IOException ex){
-                System.out.println("Error al abrir el archivo");
-                ex.printStackTrace();
-            }
+    public Experimento abrirArchivo(File f){
+        FileInputStream fileInputStream=null;
+        InputStreamReader inputStreamReader=null;
+        BufferedReader bufferedReader=null;
+        try{
+            fileInputStream= new FileInputStream(f);
+            inputStreamReader= new InputStreamReader(fileInputStream);
+            bufferedReader= new BufferedReader(inputStreamReader);
+        }catch(FileNotFoundException e){
+            System.out.println("Error al abrir el archivo");
+            e.printStackTrace();
         }
-        return e;
+
+        String linea;
+        String nombre="";
+        ArrayList<Poblacion> poblaciones= new ArrayList<Poblacion>();
+        try{
+            while((linea=bufferedReader.readLine())!=null){
+                if(linea.contains("Nombre:")){
+                    nombre=linea.substring(8);
+                }
+                else if(linea.contains("Número de bacterias iniciales:")){
+                    String[] datos= linea.split(",");
+                    String nombreP= datos[0].substring(11);
+                    int cantidad= Integer.parseInt(datos[1].substring(10));
+                    Poblacion p= new Poblacion(nombreP, cantidad);
+                    poblaciones.add(p);
+                }
+            }
+        }catch(IOException e){
+            System.out.println("Error al leer el archivo");
+            e.printStackTrace();
+        }
+
+        Experimento experimento= new Experimento(nombre, poblaciones);
+        return experimento;
     }
-
-
-
 }

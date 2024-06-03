@@ -1,7 +1,7 @@
 package Interfaces;
 
 import Excepciones.ExceptionCantidad;
-import Modelo.Poblacion;
+import ClasesLab.Poblacion;
 
 public interface ManejadorExperimentos {
 

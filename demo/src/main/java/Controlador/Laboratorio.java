@@ -1,17 +1,13 @@
 package Controlador;
-import java.io.IOException;
 import java.util.*;
 
-import Excepciones.ExceptionCantidad;
 import InputOutput.*;
-import Interfaces.ManejadorExperimentos;
-import Modelo.*;
+import ClasesLab.*;
 
 
-public class Laboratorio {
+public class Laboratorio implements Interfaces.ManejadorLaboratorio{
 
     private ArrayList<Experimento> experimentos;
-    private ManejadorExperimentos expManager;
     private Experimento experimentoActual;
 
     public Laboratorio(){
@@ -27,10 +23,6 @@ public class Laboratorio {
         this.experimentos = experimentos;
     }
 
-    public ManejadorExperimentos getexpManager(){
-        return expManager;
-    }
-
     public Experimento getExperimentoActual(){
         return experimentoActual;
     }
@@ -39,7 +31,7 @@ public class Laboratorio {
         this.experimentoActual = experimentoActual;
     }
     
-    public void crearExperimento() throws ExceptionCantidad, IOException{
+    public void crearExperimento(){
         Salida salida = new Salida();
         Experimento e= salida.pedirDatosExperimentos();
         experimentos.add(e);

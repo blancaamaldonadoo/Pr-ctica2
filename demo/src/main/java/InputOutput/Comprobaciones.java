@@ -4,7 +4,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import Modelo.Luminosidad;
+import ClasesLab.Luminosidad;
 
 public class Comprobaciones {
     

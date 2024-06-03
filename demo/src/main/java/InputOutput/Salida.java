@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import Excepciones.ExceptionCantidad;
-import Modelo.*;
+import ClasesLab.*;
 
 public class Salida{
     private Salida salida;

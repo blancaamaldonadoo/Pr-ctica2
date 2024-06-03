@@ -2,7 +2,7 @@ package InputOutput;
 
 import java.util.ArrayList;
 
-import Modelo.Poblacion;
+import ClasesLab.Poblacion;
 
 public class Ordenaciones {
 

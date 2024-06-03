@@ -1,4 +1,4 @@
-package Modelo;
+package ClasesLab;
 
 import Excepciones.ExcepcionDiaDosis;
 import Excepciones.ExceptionCantidad;

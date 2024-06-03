@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import InputOutput.Comprobaciones;
 import InputOutput.Ordenaciones;
-import Modelo.Poblacion;
+import ClasesLab.Poblacion;
 
 public class MainOrden {
     
