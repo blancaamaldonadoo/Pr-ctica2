@@ -10,17 +10,35 @@ public class Salida{
 
     public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
         String nombre= Comprobaciones.leerString("Introduce el nombre de la población: ");
-        LocalDate fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de incio (yyyy-MM-dd): ");
-        LocalDate fechaFin=Comprobaciones.leerFecha("Introduce la fecha de fin (yyyy-MM-dd): ");
+        LocalDate [] fechas = comprobarFechas();
         int numBacteriasIniciales= Comprobaciones.leerInt("Introduce el número de bacterias iniciales: ");
         double temperatura= Comprobaciones.leerDouble("Introduce la temperatura: ");
         Luminosidad nivelLuz=Comprobaciones.leerLuminosidad("Introduce el nivel de luminosidad {ALTA, MEDIA, BAJA}: ");
         System.out.println("\nPara la dosis de comida: ");
-        Poblacion p = new Poblacion(nombre, fechaInicio, fechaFin, numBacteriasIniciales, temperatura, nivelLuz, opcionesDosis());
-        System.out.println("Población creada con éxito");
+        Poblacion p = new Poblacion(nombre, fechas[0], fechas[1], numBacteriasIniciales, temperatura, nivelLuz, opcionesDosis());
+        System.out.println("\nPoblación creada con éxito:");
         System.out.println(p);
         return p;
     }
+
+    public LocalDate[] comprobarFechas(){
+        LocalDate [] fechas = new LocalDate[2];
+        LocalDate fechaInicio;
+        LocalDate fechaFin;
+        do{
+            fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de inicio (yyyy-MM-dd): ");   
+            fechaFin=Comprobaciones.leerFecha("Introduce la fecha de fin (yyyy-MM-dd): ");
+            if(fechaInicio.isAfter(fechaFin)){
+                System.out.println("La fecha de inicio no puede ser posterior a la fecha de fin");
+            }
+        }
+        while(fechaInicio.isAfter(fechaFin));
+        if(fechaInicio.isAfter(fechaFin)) comprobarFechas();
+        fechas[0]=fechaInicio;
+        fechas[1]=fechaFin;
+        return fechas;
+    }
+    
 
     public void comprobarCantidadComida(long cantidad) throws ExceptionCantidad{
         if(cantidad>=300000 || cantidad<=0){

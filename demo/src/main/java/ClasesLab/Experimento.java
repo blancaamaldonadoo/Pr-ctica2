@@ -1,6 +1,7 @@
 package ClasesLab;
 import java.util.*;
 
+import Excepciones.ExcepcionFechas;
 import Excepciones.ExceptionCantidad;
 import InputOutput.Salida;
 
@@ -39,7 +40,7 @@ public class Experimento implements Interfaces.ManejadorExperimentos {
     }
 
     
-    public Poblacion crearPoblacion() throws ExceptionCantidad{
+    public Poblacion crearPoblacion() throws ExceptionCantidad, ExcepcionFechas{
        Salida salida= new Salida();
        Poblacion p= salida.pedirDatosPoblacion();
        return p;
