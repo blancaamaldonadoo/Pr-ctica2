@@ -40,8 +40,8 @@ public class Salida{
     }
     
 
-    public void comprobarCantidadComida(long cantidad) throws ExceptionCantidad{
-        if(cantidad>=300000 || cantidad<=0){
+    public void comprobarCantidadComida(float cantidad) throws ExceptionCantidad{
+        if(cantidad>=300000 || cantidad<0){
             throw new ExceptionCantidad("La cantidad inicial debe ser un número entero menor de 300000 miligramos");
         }
     }
@@ -76,13 +76,13 @@ public class Salida{
 
     public Dosis pedirDatosDosis()throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
-        long cantidadInicial=Comprobaciones.leerLong("Introduce la cantidad inicial de comida (mg): ");
+        float cantidadInicial=Comprobaciones.leerFloat("Introduce la cantidad inicial de comida (mg): ");
         comprobarCantidadComida(cantidadInicial);
         int diaStopIncremento=Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
                     " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
-        long dosisDiaStopIncremento=Comprobaciones.leerLong("Introduce la cantidad que quiera dar ese día (mg): ");
+        float dosisDiaStopIncremento=Comprobaciones.leerFloat("Introduce la cantidad que quiera dar ese día (mg): ");
         comprobarCantidadComida(dosisDiaStopIncremento);
-        long dosisDiaFinal=Comprobaciones.leerLong("Introduce la cantidad final (dia " + duracionDias +"): ");
+        float dosisDiaFinal=Comprobaciones.leerFloat("Introduce la cantidad final (dia " + duracionDias +"): ");
         comprobarCantidadComida(dosisDiaFinal);
         Dosis d = new Dosis(duracionDias,cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDiaFinal);
         return d;
@@ -90,14 +90,14 @@ public class Salida{
 
     public Dosis pedirDatosDosisConstante() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis (días): ");
-        long cantidadConstante=Comprobaciones.leerLong("Introduce una cantidad constante de comida (mg)");
+        float cantidadConstante=Comprobaciones.leerFloat("Introduce una cantidad constante de comida (mg)");
         comprobarCantidadComida(cantidadConstante);
         Dosis d= new Dosis(duracionDias, cantidadConstante);
         return d;
     }
 
-    public ArrayList<Long> calcularDosisConstante(Dosis d) throws IllegalArgumentException, ExcepcionDiaDosis{
-        ArrayList<Long> listDosis= new ArrayList<Long>();
+    public ArrayList<Float> calcularDosisConstante(Dosis d) throws IllegalArgumentException, ExcepcionDiaDosis{
+        ArrayList<Float> listDosis= new ArrayList<Float>();
         for(int i=0; i<d.calcularDosisConstante(i); i++){
             listDosis.add(d.getCantidadConstante());
         }
@@ -106,17 +106,17 @@ public class Salida{
 
     public Dosis pedirDatosDosisInicioFin() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
-        long cantidadInicial=Comprobaciones.leerLong("Introduce la cantidad de comida del día incial (mg)");
+        float cantidadInicial=Comprobaciones.leerFloat("Introduce la cantidad de comida del día incial (mg)");
         comprobarCantidadComida(cantidadInicial);
-        long dosisDiaStop=Comprobaciones.leerLong("Introduce la cantidad límite para detener la dosis (mg)");
+        float dosisDiaStop=Comprobaciones.leerFloat("Introduce la cantidad límite para detener la dosis (mg)");
         comprobarCantidadComida(dosisDiaStop);
         Dosis d= new Dosis(duracionDias, cantidadInicial, dosisDiaStop);
         calcularDosisInicioFin(d);
         return d;
     }
 
-    public ArrayList<Long> calcularDosisInicioFin(Dosis d) throws ExceptionCantidad{
-        ArrayList<Long> listDosis= new ArrayList<Long>();
+    public ArrayList<Float> calcularDosisInicioFin(Dosis d) throws ExceptionCantidad{
+        ArrayList<Float> listDosis= new ArrayList<Float>();
         for(int i=0; i<d.getDuracionDias(); i++){
             listDosis.add(d.calcularDosisInicioFin(i));
         }
@@ -125,14 +125,14 @@ public class Salida{
 
     public Dosis pedirDatosDosisIntermitente() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
-        long cantidadConstante=Comprobaciones.leerLong("Introduce la cantidad de comida del día incial (mg)");
+        float cantidadConstante=Comprobaciones.leerFloat("Introduce la cantidad de comida del día incial (mg)");
         comprobarCantidadComida(cantidadConstante);
         Dosis d= new Dosis(duracionDias, cantidadConstante);
         return d;
     }
 
-    public ArrayList<Long> calcularDosisIntermitente(Dosis d) throws ExcepcionDiaDosis{
-        ArrayList<Long> listDosis= new ArrayList<Long>();
+    public ArrayList<Float> calcularDosisIntermitente(Dosis d) throws ExcepcionDiaDosis{
+        ArrayList<Float> listDosis= new ArrayList<Float>();
         for(int i=0; i<d.getDuracionDias(); i++){
             listDosis.add(d.calcularDosisIntermitente(i));
         }
@@ -150,7 +150,7 @@ public class Salida{
         dosis.setDuracionDias(duracionDias);
 
         if(dosis.getCantidadInicial()!=0){
-            long cantidadInicial=Comprobaciones.leerLong("Introduce la nueva cantidad inicial de comida(mg): ");
+            float cantidadInicial=Comprobaciones.leerFloat("Introduce la nueva cantidad inicial de comida(mg): ");
             comprobarCantidadComida(cantidadInicial);
             dosis.setCantidadInicial(cantidadInicial);
         }
@@ -160,19 +160,19 @@ public class Salida{
                         " incrementar la dosis (De entre los " + dosis.getDuracionDias() +" días que dura el exeprimento): ");
             dosis.setDiaStopIncremento(diaStopIncremento);
 
-            long dosisDiaStopIncremento=Comprobaciones.leerLong("Introduce la cantidad que quiera dar ese día(mg): ");
+            float dosisDiaStopIncremento=Comprobaciones.leerFloat("Introduce la cantidad que quiera dar ese día(mg): ");
             comprobarCantidadComida(dosisDiaStopIncremento);
             dosis.setDosisDiaStopIncremento(dosisDiaStopIncremento);
         }
 
         if(dosis.getDosisDiaFinal()!=0){
-            long dosisDiaFinal=Comprobaciones.leerLong("Introduce la cantidad final (dia " + dosis.getDuracionDias() + ") (mg): ");
+            float dosisDiaFinal=Comprobaciones.leerFloat("Introduce la cantidad final (dia " + dosis.getDuracionDias() + ") (mg): ");
             comprobarCantidadComida(dosisDiaFinal);
             dosis.setDosisDia30(dosisDiaFinal);
         }
 
         if(dosis.getCantidadConstante()!=0){
-            long cantidadConstante=Comprobaciones.leerLong("Introduce la nueva cantidad de comida constante (mg)");
+            float cantidadConstante=Comprobaciones.leerFloat("Introduce la nueva cantidad de comida constante (mg)");
             comprobarCantidadComida(cantidadConstante);
             dosis.setCantidadConstante(cantidadConstante);
         }

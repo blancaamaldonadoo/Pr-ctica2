@@ -6,13 +6,13 @@ import Excepciones.ExceptionCantidad;
 public class Dosis{
 
     private int duracionDias=0;
-    private long cantidadInicial=0;
+    private float cantidadInicial=0;
     private int diaStopIncremento=0;
-    private long dosisDiaStopIncremento;
-    private long dosisDiaFinal=0;    
-    private long cantidadConstante=0;
+    private float dosisDiaStopIncremento;
+    private float dosisDiaFinal=0;    
+    private float cantidadConstante=0;
 
-    public Dosis( int duracionDias, long cantidadInicial, int diaStopIncremento, long dosisDiaStopIncremento, long dosisDiaFinal) throws ExceptionCantidad{
+    public Dosis( int duracionDias, float cantidadInicial, int diaStopIncremento, float dosisDiaStopIncremento, float dosisDiaFinal) throws ExceptionCantidad{
         this.duracionDias = duracionDias;
         if(cantidadInicial>300000||dosisDiaFinal>300000){
             throw new ExceptionCantidad("Las dosis no pueden ser mayores a 300000 miligramos");
@@ -24,12 +24,12 @@ public class Dosis{
         this.dosisDiaFinal = dosisDiaFinal;
     }
 
-    public Dosis(int duracionDias, long cantidadConstante){
+    public Dosis(int duracionDias, float cantidadConstante){
         this.duracionDias=duracionDias;
         this.cantidadConstante=cantidadConstante;
     }
 
-    public Dosis(int duracionDias, long cantidadInicial, long dosisDiaFinal){
+    public Dosis(int duracionDias, float cantidadInicial, float dosisDiaFinal){
         this.duracionDias=duracionDias;
         this.cantidadInicial=cantidadInicial;
         this.dosisDiaFinal=dosisDiaFinal;
@@ -41,10 +41,10 @@ public class Dosis{
     public void setDuracionDias(int duracionDias){
         this.duracionDias = duracionDias;
     }
-    public long getCantidadInicial(){
+    public float getCantidadInicial(){
         return cantidadInicial;
     }
-    public void setCantidadInicial(long cantidadInicial){
+    public void setCantidadInicial(float cantidadInicial){
         this.cantidadInicial = cantidadInicial;
     }
     public int getDiaStopIncremento(){
@@ -53,22 +53,22 @@ public class Dosis{
     public void setDiaStopIncremento(int diaStopIncremento){
         this.diaStopIncremento = diaStopIncremento;
     }
-    public long getDosisDiaStopIncremento(){
+    public float getDosisDiaStopIncremento(){
         return dosisDiaStopIncremento;
     }
-    public void setDosisDiaStopIncremento(long dosisDiaStopIncremento){
+    public void setDosisDiaStopIncremento(float dosisDiaStopIncremento){
         this.dosisDiaStopIncremento = dosisDiaStopIncremento;
     }
-    public long getDosisDiaFinal(){
+    public float getDosisDiaFinal(){
         return dosisDiaFinal;
     }
-    public void setDosisDia30(long dosisDiaFinal){
+    public void setDosisDia30(float dosisDiaFinal){
         this.dosisDiaFinal = dosisDiaFinal;
     }
-    public long getCantidadConstante(){
+    public float getCantidadConstante(){
         return cantidadConstante;
     }
-    public void setCantidadConstante(long cantidadConstante){
+    public void setCantidadConstante(float cantidadConstante){
         this.cantidadConstante=cantidadConstante;
     }
 
@@ -85,8 +85,8 @@ public class Dosis{
         return texto;
     }
 
-    public long calcularDosisConstante(int dia) throws ExcepcionDiaDosis, IllegalArgumentException{
-        long dosis=0;
+    public float calcularDosisConstante(int dia) throws ExcepcionDiaDosis, IllegalArgumentException{
+        float dosis=0;
         if (dia>duracionDias){
             throw new ExcepcionDiaDosis("El día no puede ser mayor a la duración del experimento.");
         }
@@ -95,29 +95,29 @@ public class Dosis{
         }
         if(dia<diaStopIncremento){
             double incremento= (dosisDiaStopIncremento-cantidadInicial)/(double)diaStopIncremento;
-            dosis= ((long)incremento* dia) + cantidadInicial;
+            dosis= ((float)incremento* dia) + cantidadInicial;
         }else if(dia==diaStopIncremento){
             dosis=dosisDiaStopIncremento;
         }
         else {
             double decremento= (dosisDiaStopIncremento-dosisDiaFinal)/(double)(duracionDias-diaStopIncremento);
-            dosis= dosisDiaStopIncremento- ((long)decremento*(dia-diaStopIncremento));
+            dosis= dosisDiaStopIncremento- ((float)decremento*(dia-diaStopIncremento));
         }
         return dosis;
     }
 
-    public Long calcularDosisInicioFin(int dia) throws ExceptionCantidad {
-        long dosis=0;
+    public float calcularDosisInicioFin(int dia) throws ExceptionCantidad {
+        float dosis=0;
         if(dosisDiaFinal<cantidadInicial) throw new ExceptionCantidad("La cantidad final tiene que ser mayor que la inicial");
         else{
             double incremento= (dosisDiaFinal-cantidadInicial)/(double)duracionDias;
-            dosis= ((long)incremento* dia) + cantidadInicial;
+            dosis= ((float)incremento* dia) + cantidadInicial;
         }
         return dosis;
     }
 
-    public long calcularDosisIntermitente(int dia) throws ExcepcionDiaDosis{
-        long dosis=0;
+    public float calcularDosisIntermitente(int dia) throws ExcepcionDiaDosis{
+        float dosis=0;
         if(dia>duracionDias) throw new ExcepcionDiaDosis("El día no entra dentro del rango establecido");
         if(dia<0) throw new IllegalArgumentException("El día no puede ser negativo.");
         if(dia%2==0){
@@ -126,11 +126,11 @@ public class Dosis{
         return dosis;
     }
 
-    public long getDosisMax(){
-        long dosisMax=0;
+    public float getDosisMax(){
+        float dosisMax=0;
         if(diaStopIncremento>0){
             double incremento= (dosisDiaStopIncremento-cantidadInicial)/(double)diaStopIncremento;
-            dosisMax= ((long)incremento* diaStopIncremento) + cantidadInicial;
+            dosisMax= ((float)incremento* diaStopIncremento) + cantidadInicial;
         }else{
             dosisMax=dosisDiaStopIncremento;
         }

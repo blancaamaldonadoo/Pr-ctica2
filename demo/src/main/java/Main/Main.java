@@ -71,13 +71,15 @@ public class Main{
         
     }
 
-    public static void simulacionExperimento(){
+    public static void simulacionExperimento() throws ExceptionCantidad, ExcepcionFechas{
         Experimento e= laboratorio.buscarExperimento();
+        if(e==null) menuPrincipal();
         String nombrePob=Comprobaciones.leerString("Introduce el nombre de la población que quiera simular");
         Poblacion p=e.buscarPoblacion(nombrePob);
+        if (p==null) menuPrincipal();
         int dias= Comprobaciones.leerInt("Introduce el número de días que quieres simular: ");
         SimulacionMonteCarlo simulacion = new SimulacionMonteCarlo(p,dias);
-        simulacion.imprimirSimulacion();
+        //simulacion.imprimirSimulacion();
     }
 
     public static void menuExperimento(Experimento e) throws ExceptionCantidad, ExcepcionFechas{

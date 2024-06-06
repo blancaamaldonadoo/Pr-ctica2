@@ -52,12 +52,12 @@ public class Comprobaciones {
     }
 
     
-    public static long leerLong(String l){
-        long numero=0;
+    public static float leerFloat(String f){
+        float numero=0;
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
-        System.out.println(l);
+        System.out.println(f);
         try {
-            numero=Long.parseLong(teclado.readLine());
+            numero=Float.parseFloat(teclado.readLine());
         } catch (NumberFormatException e) {
             System.out.println("Número no válido");
             e.printStackTrace();

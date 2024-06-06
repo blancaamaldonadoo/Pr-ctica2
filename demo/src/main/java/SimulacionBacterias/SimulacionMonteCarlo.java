@@ -47,7 +47,7 @@ public class SimulacionMonteCarlo{
     }
 
     private void distribuirComida(int dia){
-        long cantidadComida=calcularComidaDiaria(dia);
+        float cantidadComida=calcularComidaDiaria(dia);
         for(int i=0; i<celdas; i++){
             for(int j=0; j<celdas; j++){
                 comida[dia][i][j]= comida[dia-1][i][j]+(int) (cantidadComida/(celdas*celdas));
@@ -55,10 +55,10 @@ public class SimulacionMonteCarlo{
         }
     }
 
-    private long calcularComidaDiaria(int dia){
-        long comida0= poblacionBacterias.getDosis().getCantidadInicial();
-        long comidaMax= poblacionBacterias.getDosis().getDosisMax();
-        long comidaFinal= poblacionBacterias.getDosis().getDosisDiaFinal();
+    private float calcularComidaDiaria(int dia){
+        float comida0= poblacionBacterias.getDosis().getCantidadInicial();
+        float comidaMax= poblacionBacterias.getDosis().getDosisMax();
+        float comidaFinal= poblacionBacterias.getDosis().getDosisDiaFinal();
 
         if(dia<= comidaMax){
             return comida0 + ((comidaMax-comida0)*dia/comidaMax);
@@ -143,7 +143,7 @@ public class SimulacionMonteCarlo{
         }
     }
 
-    public void imprimirSimulacion(){
+    /*public void imprimirSimulacion(){
         for(int i=0; i<dias; i++){
             System.out.println("Día "+i);
             for(int j=0; j<celdas; j++){
@@ -153,8 +153,7 @@ public class SimulacionMonteCarlo{
                 System.out.println();
             }
         }
-    
-    }
+    }*/
     
 
     //Getters y setters

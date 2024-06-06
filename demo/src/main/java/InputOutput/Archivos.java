@@ -64,11 +64,11 @@ public class Archivos extends Laboratorio{
                 BufferedWriter bw= new BufferedWriter(writer);
                 bw.write(e.toString());
                 bw.close();
+                System.out.println("El archivo se ha guardado con éxito");
             }catch(IOException ex){
                 System.out.println("Error al guardar el archivo");
                 ex.printStackTrace();
             }
-            System.out.println("El archivo se ha guardado con éxito");
         }
         
         Archivos Arch= new Archivos(archivo, experimento);
@@ -79,15 +79,14 @@ public class Archivos extends Laboratorio{
     public File getFileOfExperiment(Experimento e){
         File f = null;
         for(Archivos a: getArchivos()){
-            if(a.getExperimento().equals(e)) f = a.getarch();
+            if(a.getExperimento().equals(e)) f = a.getArchivo();
         }
         return f;
     }
 
     public void guardar(Experimento e){
         File archivo= getFileOfExperiment(e);
-        if(!archivo.exists()) 
-            guardarComo(e);
+        if (archivo == null) guardarComo(e);
         else{
             try(FileWriter writer= new FileWriter(archivo);
             BufferedWriter bw= new BufferedWriter(writer)){
@@ -98,6 +97,7 @@ public class Archivos extends Laboratorio{
                 ex.printStackTrace();
             }
         }
+        
     }
 
     public Experimento abrirArchivo(File f){
