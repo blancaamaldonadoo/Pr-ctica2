@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Excepciones.ExcepcionFechas;
 import Excepciones.ExceptionCantidad;
+import InputOutput.Archivos;
 import InputOutput.Comprobaciones;
 import InputOutput.Ordenaciones;
 import SimulacionBacterias.SimulacionMonteCarlo;
@@ -56,18 +57,18 @@ public class Main{
     }
 
     public static void abrirArchivo() throws ExceptionCantidad, ExcepcionFechas{
-        System.out.println("Introduce el nombre del archivo que quieres abrir: ");
-        String nombre = Comprobaciones.leerString("");
-        File f= new File(nombre);
-        Experimento experimento=null;
-        if(f.exists()){
-            //experimento= abrirArchivo(f);
-            //addExperimento(experimento);
-        }
-        else{
-            System.out.println("El archivo no existe");
+        String nombre= Comprobaciones.leerString("Introduce el nombre del archivo: ");
+        if(laboratorio.archivoExist(nombre)!=false){
+            System.out.println("El archivo no existe.");
             menuPrincipal();
         }
+        else{
+        File f= new File(nombre);
+        f= laboratorio.getArchivo(nombre);
+        Archivos a= new Archivos(f);
+        a.abrirArchivo(f);
+        }
+        
     }
 
     public static void simulacionExperimento(){
@@ -116,11 +117,12 @@ public class Main{
                 }
     
                 case 5:{
+                    guardar(e);
                     break;
                 }
     
                 case 6:{
-                    //fileManager.guardarComo(labManager.getExperimentoActual());
+                    guardarComo(e);
                     break;
                 }
     
@@ -161,6 +163,27 @@ public class Main{
         Poblacion p= laboratorio.getExperimentoActual().buscarPoblacion(nombre);
         laboratorio.getExperimentoActual().verDetallesPoblacion(p);
         menuPrincipal();
+    }
+
+    public static void guardar(Experimento e){
+        String nombre= Comprobaciones.leerString("Introduce el nombre del archivo: ");
+        if(laboratorio.archivoExist(nombre)!=false){
+           guardarComo(e);
+        }
+        else{
+            File file = new File(nombre);
+            Archivos a= new Archivos(nombre,file, e);
+            a.guardar(e);
+            laboratorio.addArchivo(a);
+        }
+    }
+
+    public static void guardarComo(Experimento e){
+        String nombre= Comprobaciones.leerString("Introduce el nombre del archivo: ");
+        File file= new File(nombre);
+        Archivos a= new Archivos(nombre,file,e);
+        a.guardarComo(e);
+        laboratorio.addArchivo(a);
     }
 
     public static void menuOrden(ArrayList<Poblacion> poblaciones){

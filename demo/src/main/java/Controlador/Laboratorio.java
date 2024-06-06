@@ -1,4 +1,5 @@
 package Controlador;
+import java.io.File;
 import java.util.*;
 
 import InputOutput.*;
@@ -39,6 +40,24 @@ public class Laboratorio {
     
     public void addArchivo(Archivos a){
         this.archivos.add(a);
+    }
+
+    public boolean archivoExist(String nombre){
+        for(Archivos a: archivos){
+            if(a.getArchivo().getName().equals(nombre)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public File getArchivo(String nombre){
+        for(Archivos a: archivos){
+            if(a.getArchivo().getName().equals(nombre)){
+                return a.getArchivo();
+            }
+        }
+        return null;
     }
     
     public Experimento crearExperimento(){

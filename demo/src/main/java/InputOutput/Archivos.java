@@ -7,20 +7,26 @@ import ClasesLab.Poblacion;
 import Controlador.Laboratorio;
 
 public class Archivos extends Laboratorio{
-
+    private String nombre;
     private File archivo;
     private Experimento experimento;
 
-    public Archivos(File archivo, Experimento experimento) {
+    public Archivos(String nombre, File archivo, Experimento experimento) {
+        this.nombre=nombre;
         this.archivo=archivo;
         this.experimento = experimento;
+    }
+
+    public Archivos(File archivo, Experimento experimento){
+        this.archivo=archivo;
+        this.experimento=experimento;
     }
 
     public Archivos(File archivo){
         this.archivo=archivo;
     }
 
-    public File getarch(){
+    public File getArchivo(){
         return archivo;
     }
 
@@ -28,11 +34,26 @@ public class Archivos extends Laboratorio{
         return experimento;
     }
 
+    public void setExperimento(Experimento experimento){
+        this.experimento=experimento;
+    }
+
+    public void setArchivo(File archivo){
+        this.archivo=archivo;
+    }
+
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+    }
+
+    public String getNombre(){
+        return nombre;
+    }
+
     public void guardarComo(Experimento e){
         String nombre= e.getNombre();
         String ruta= nombre+".txt";
         File archivo = new File(ruta, nombre);
-        //comprobar que no se haya guardado ya antes:
         while(archivo.exists()){
            System.out.println("El archivo ya ha sido previamente guardado, por favor, seleccione la opción de guardar. ");
         }
