@@ -9,8 +9,7 @@ public class Dosis{
     private long cantidadInicial=0;
     private int diaStopIncremento=0;
     private long dosisDiaStopIncremento;
-    private long dosisDiaFinal=0;
-    
+    private long dosisDiaFinal=0;    
     private long cantidadConstante=0;
 
     public Dosis( int duracionDias, long cantidadInicial, int diaStopIncremento, long dosisDiaStopIncremento, long dosisDiaFinal) throws ExceptionCantidad{
@@ -125,5 +124,16 @@ public class Dosis{
             dosis= cantidadConstante;
         }
         return dosis;
+    }
+
+    public long getDosisMax(){
+        long dosisMax=0;
+        if(diaStopIncremento>0){
+            double incremento= (dosisDiaStopIncremento-cantidadInicial)/(double)diaStopIncremento;
+            dosisMax= ((long)incremento* diaStopIncremento) + cantidadInicial;
+        }else{
+            dosisMax=dosisDiaStopIncremento;
+        }
+        return dosisMax;
     }
 }

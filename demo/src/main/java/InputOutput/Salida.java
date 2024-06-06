@@ -145,7 +145,7 @@ public class Salida{
         return experimento;
     }
 
-    public Dosis DatosModificarDosis(Dosis dosis)throws ExceptionCantidad{
+    public Dosis datosModificarDosis(Dosis dosis)throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la nueva duración de la dosis en días: ");
         dosis.setDuracionDias(duracionDias);
 

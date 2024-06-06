@@ -3,7 +3,7 @@ package Interfaces;
 import ClasesLab.Experimento;
 import InputOutput.Archivos;
 
-public interface ManejadorLaboratorio {
+/*public interface ManejadorLaboratorio {
     public Experimento crearExperimento();
     public void addArchivo(Archivos s);
     public Experimento cambiarNombreExperimento(Experimento experimento);
@@ -11,3 +11,4 @@ public interface ManejadorLaboratorio {
     public void eliminarExperimento(Experimento e);
     public Experimento getExperimentoActual();
 }
+*/

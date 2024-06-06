@@ -93,7 +93,7 @@ public class Poblacion extends Experimento{
 
     public void modificarDosis(Dosis dosis) throws ExceptionCantidad{
         Salida salida= new Salida();
-        salida.DatosModificarDosis(dosis);
+        salida.datosModificarDosis(dosis);
     }
 
     public void visualizarDosis(Dosis d){

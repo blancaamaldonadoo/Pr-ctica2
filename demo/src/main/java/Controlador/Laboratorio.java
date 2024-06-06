@@ -5,7 +5,7 @@ import InputOutput.*;
 import ClasesLab.*;
 
 
-public class Laboratorio implements Interfaces.ManejadorLaboratorio{
+public class Laboratorio {
 
     private ArrayList<Experimento> experimentos;
     private Experimento experimentoActual;
@@ -48,6 +48,17 @@ public class Laboratorio implements Interfaces.ManejadorLaboratorio{
         experimentoActual=e;    
         System.out.println("Bienvenido al experimento: '" +e.getNombre() + "'");
         return e;
+    }
+
+    public Experimento buscarExperimento(){
+        String nombre= Comprobaciones.leerString("Introduce el nombre del experimento: ");
+        for(Experimento e: experimentos){
+            if(e.getNombre().equals(nombre)){
+                return e;
+            }
+        }
+        System.out.println("No existe ningún experimento con ese nombre");
+        return null;
     }
 
     public Experimento cambiarNombreExperimento(Experimento experimento){

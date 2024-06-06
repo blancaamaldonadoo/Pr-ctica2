@@ -23,6 +23,7 @@ public class SimulacionMonteCarlo{
         inicializarCultivo();
     }
 
+    
     private void inicializarCultivo(){
         int contadorBacterias= (int) poblacionBacterias.getNumBacteriasIniciales();
         for(int i= 8; i<12; i++){
@@ -141,6 +142,20 @@ public class SimulacionMonteCarlo{
             cultivo[dia][x][y]--;
         }
     }
+
+    public void imprimirSimulacion(){
+        for(int i=0; i<dias; i++){
+            System.out.println("Día "+i);
+            for(int j=0; j<celdas; j++){
+                for(int k=0; k<celdas; k++){
+                    System.out.print(cultivo[i][j][k]+" ");
+                }
+                System.out.println();
+            }
+        }
+    
+    }
+    
 
     //Getters y setters
 

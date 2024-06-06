@@ -6,6 +6,7 @@ import Excepciones.ExcepcionFechas;
 import Excepciones.ExceptionCantidad;
 import InputOutput.Comprobaciones;
 import InputOutput.Ordenaciones;
+import SimulacionBacterias.SimulacionMonteCarlo;
 import ClasesLab.Experimento;
 import ClasesLab.Poblacion;
 import Controlador.Laboratorio;
@@ -25,6 +26,7 @@ public class Main{
         System.out.println("\nElige una opción: ");
         System.out.println("1. Abrir un experimento ");
         System.out.println("2. Crear un nuevo experimento ");
+        System.out.println("3. Simular un experimento ");
 
         int opcion = Comprobaciones.leerInt("");
         switch(opcion){
@@ -38,6 +40,11 @@ public class Main{
                     Experimento e= laboratorio.crearExperimento();
                     laboratorio.setExperimentoActual(e);
                     menuExperimento(e);
+                    break;
+                }
+
+                case 3:{
+                    simulacionExperimento();
                     break;
                 }
     
@@ -61,6 +68,15 @@ public class Main{
             System.out.println("El archivo no existe");
             menuPrincipal();
         }
+    }
+
+    public static void simulacionExperimento(){
+        Experimento e= laboratorio.buscarExperimento();
+        String nombrePob=Comprobaciones.leerString("Introduce el nombre de la población que quiera simular");
+        Poblacion p=e.buscarPoblacion(nombrePob);
+        int dias= Comprobaciones.leerInt("Introduce el número de días que quieres simular: ");
+        SimulacionMonteCarlo simulacion = new SimulacionMonteCarlo(p,dias);
+        simulacion.imprimirSimulacion();
     }
 
     public static void menuExperimento(Experimento e) throws ExceptionCantidad, ExcepcionFechas{
