@@ -117,7 +117,8 @@ public class Main{
         if (p==null) menuPrincipal();
         int dias= Comprobaciones.leerInt("Introduce el número de días que quieres simular: ");
         SimulacionMonteCarlo simulacion = new SimulacionMonteCarlo(p,dias);
-        //simulacion.imprimirSimulacion();
+        simulacion.ejecutarSimulacion();
+        menuPrincipal();
     }
 
     /**

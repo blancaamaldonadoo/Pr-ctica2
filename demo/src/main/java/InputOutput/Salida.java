@@ -217,7 +217,7 @@ public class Salida{
      */
 
     public Experimento pedirDatosExperimentos(){
-        String nombre= Comprobaciones.leerString("Introduce el nombre del Experimento: ");
+        String nombre= Comprobaciones.leerString("Introduce el nombre del experimento: ");
         Experimento experimento= new Experimento(nombre, new ArrayList<Poblacion>());
         return experimento;
     }
@@ -241,7 +241,7 @@ public class Salida{
 
         if(dosis.getDiaStopIncremento()!=0){
             int diaStopIncremento= Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
-                        " incrementar la dosis (De entre los " + dosis.getDuracionDias() +" días que dura el exeprimento): ");
+                        " incrementar la dosis (De entre los " + dosis.getDuracionDias() +" días que dura el experimento): ");
             dosis.setDiaStopIncremento(diaStopIncremento);
 
             float dosisDiaStopIncremento=Comprobaciones.leerFloat("Introduce la cantidad que quiera dar ese día(mg): ");

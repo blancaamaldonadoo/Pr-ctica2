@@ -203,19 +203,31 @@ public class SimulacionMonteCarlo{
         }
     }
 
-    /*public void imprimirSimulacion(){
-        for(int i=0; i<dias; i++){
-            System.out.println("Día "+i);
-            for(int j=0; j<celdas; j++){
-                for(int k=0; k<celdas; k++){
-                    System.out.print(cultivo[i][j][k]+" ");
+
+
+    public void ejecutarSimulacion() {
+        for (int dia = 0; dia < dias; dia++) {
+            run();
+            System.out.println("Día " + dia);
+            System.out.println("Bacterias restantes:");
+            for (int i = 0; i < celdas; i++) {
+                for (int j = 0; j < celdas; j++) {
+                    System.out.printf("%-4d", cultivo[dia][i][j]);
                 }
                 System.out.println();
             }
+            System.out.println("Comida disponible:");
+            for (int i = 0; i < celdas; i++) {
+                for (int j = 0; j < celdas; j++) {
+                    System.out.printf("%-4d", comida[dia][i][j]);
+                }
+                System.out.println();
+            }
+            System.out.println();
         }
-    }*/
+    }
     
-/**
+    /**
      * Getters y setters de la clase SimulacionMonteCarlo.
      * @return
      */
