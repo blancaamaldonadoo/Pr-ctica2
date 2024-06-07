@@ -6,7 +6,18 @@ import InputOutput.Comprobaciones;
 import InputOutput.Ordenaciones;
 import ClasesLab.Poblacion;
 
+/**
+ * Clase que modela el menú de ordenación de poblaciones.
+ * El menú de ordenación tiene las opciones de ordenar por fecha de inicio, por nombre de población o por número de bacterias iniciales.
+ * @param poblaciones Lista de poblaciones.
+ */
+
 public class MainOrden {
+    
+    /**
+     * Método que muestra el menú de ordenación de poblaciones.
+     * @param poblaciones Lista de poblaciones.
+     */
     
     public static void MenuOrden(ArrayList<Poblacion> poblaciones){
 

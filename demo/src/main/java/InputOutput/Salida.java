@@ -6,7 +6,17 @@ import Excepciones.ExcepcionDiaDosis;
 import Excepciones.ExceptionCantidad;
 import ClasesLab.*;
 
+/**
+ * Clase que se encarga de la entrada y salida de datos en la aplicación.
+ */
+
 public class Salida{
+
+    /**
+     * Método que pide los datos de una población.
+     * @return
+     * @throws ExceptionCantidad
+     */
 
     public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
         String nombre= Comprobaciones.leerString("Introduce el nombre de la población: ");
@@ -20,6 +30,11 @@ public class Salida{
         System.out.println(p);
         return p;
     }
+
+    /**
+     * Método que pide las fechas de inicio y fin de un experimento.
+     * @return
+     */
 
     public LocalDate[] comprobarFechas(){
         LocalDate [] fechas = new LocalDate[2];
@@ -39,12 +54,23 @@ public class Salida{
         return fechas;
     }
     
+    /**
+     * Método que comprueba que la cantidad de comida inicial sea un número entero menor de 300000 miligramos.
+     * @param cantidad
+     * @throws ExceptionCantidad
+     */
 
     public void comprobarCantidadComida(float cantidad) throws ExceptionCantidad{
         if(cantidad>=300000 || cantidad<0){
             throw new ExceptionCantidad("La cantidad inicial debe ser un número entero menor de 300000 miligramos");
         }
     }
+
+    /**
+     * Método que pide al usuario que introduzca el tipo de dosis que quiere emplear.
+     * @return
+     * @throws ExceptionCantidad
+     */
 
     public Dosis opcionesDosis() throws ExceptionCantidad{
         System.out.println("Introduce el tipo de dosis que quieras emplear: ");
@@ -74,6 +100,12 @@ public class Salida{
         return null;
     }
 
+    /**
+     * Método que pide los datos de una dosis.
+     * @return
+     * @throws ExceptionCantidad
+     */
+
     public Dosis pedirDatosDosis()throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
         float cantidadInicial=Comprobaciones.leerFloat("Introduce la cantidad inicial de comida (mg): ");
@@ -88,6 +120,12 @@ public class Salida{
         return d;
     }
 
+    /**
+     * Método que pide los datos de una dosis constante.
+     * @return
+     * @throws ExceptionCantidad
+     */
+
     public Dosis pedirDatosDosisConstante() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis (días): ");
         float cantidadConstante=Comprobaciones.leerFloat("Introduce una cantidad constante de comida (mg)");
@@ -96,6 +134,14 @@ public class Salida{
         return d;
     }
 
+    /**
+     * Método que calcula la dosis constante.
+     * @param d
+     * @return
+     * @throws IllegalArgumentException
+     * @throws ExcepcionDiaDosis
+     */ 
+
     public ArrayList<Float> calcularDosisConstante(Dosis d) throws IllegalArgumentException, ExcepcionDiaDosis{
         ArrayList<Float> listDosis= new ArrayList<Float>();
         for(int i=0; i<d.calcularDosisConstante(i); i++){
@@ -103,6 +149,12 @@ public class Salida{
         }
         return listDosis;
     }
+
+    /**
+     * Método que pide los datos de una dosis de comida con una fecha de inicio y de fin.
+     * @return
+     * @throws ExceptionCantidad
+     */
 
     public Dosis pedirDatosDosisInicioFin() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
@@ -115,6 +167,13 @@ public class Salida{
         return d;
     }
 
+    /**
+     * Método que calcula la dosis de una dosis de comida de fecha de inicio y fin.
+     * @param d
+     * @return
+     * @throws ExceptionCantidad
+     */
+
     public ArrayList<Float> calcularDosisInicioFin(Dosis d) throws ExceptionCantidad{
         ArrayList<Float> listDosis= new ArrayList<Float>();
         for(int i=0; i<d.getDuracionDias(); i++){
@@ -122,6 +181,12 @@ public class Salida{
         }
         return listDosis;
     }
+
+    /**
+     * Método que pide los datos de una dosis intermitente.
+     * @return
+     * @throws ExceptionCantidad
+     */
 
     public Dosis pedirDatosDosisIntermitente() throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la duración de la dosis en días: ");
@@ -131,6 +196,13 @@ public class Salida{
         return d;
     }
 
+    /**
+     * Método que calcula la dosis de una dosis intermitente.
+     * @param d
+     * @return
+     * @throws ExcepcionDiaDosis
+     */
+
     public ArrayList<Float> calcularDosisIntermitente(Dosis d) throws ExcepcionDiaDosis{
         ArrayList<Float> listDosis= new ArrayList<Float>();
         for(int i=0; i<d.getDuracionDias(); i++){
@@ -139,11 +211,23 @@ public class Salida{
         return listDosis;
     }
 
+    /**
+     * Método que pide los datos de un experimento.
+     * @return
+     */
+
     public Experimento pedirDatosExperimentos(){
         String nombre= Comprobaciones.leerString("Introduce el nombre del Experimento: ");
         Experimento experimento= new Experimento(nombre, new ArrayList<Poblacion>());
         return experimento;
     }
+
+    /**
+     * Método que pide los datos de una dosis para modificarla.
+     * @param dosis
+     * @return
+     * @throws ExceptionCantidad
+     */
 
     public Dosis datosModificarDosis(Dosis dosis)throws ExceptionCantidad{
         int duracionDias=Comprobaciones.leerInt("Introduce la nueva duración de la dosis en días: ");

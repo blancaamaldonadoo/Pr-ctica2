@@ -6,8 +6,18 @@ import java.time.format.DateTimeFormatter;
 
 import ClasesLab.Luminosidad;
 
+/**
+ * Clase que modela las comprobaciones de los datos introducidos por el usuario. 
+ */
+
 public class Comprobaciones {
     
+    /**
+     * Método que lee un String introducido por el usuario.
+     * @param st String introducido por el usuario.
+     * @return texto String introducido por el usuario.
+     */
+
     public static String leerString(String st){ 
         String texto="";
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
@@ -21,6 +31,12 @@ public class Comprobaciones {
         return texto;
     }
 
+    /**
+     * Método que lee un número entero introducido por el usuario.
+     * @param i
+     * @return
+     */
+
     public static int leerInt(String i){
         int numero=0;
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
@@ -33,6 +49,12 @@ public class Comprobaciones {
         }
         return numero;
     }
+
+    /**
+     * Método que lee un número decimal introducido por el usuario.
+     * @param d
+     * @return
+     */
 
     public static double leerDouble(String d){
         double numero=0;
@@ -51,7 +73,12 @@ public class Comprobaciones {
         return numero;  
     }
 
-    
+    /**
+     * Método que lee un número decimal introducido por el usuario.
+     * @param f
+     * @return
+     */
+
     public static float leerFloat(String f){
         float numero=0;
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
@@ -69,6 +96,12 @@ public class Comprobaciones {
         return numero;  
     }
 
+    /**
+     * Método que lee una fecha introducida por el usuario.
+     * @param f
+     * @return
+     */
+
     public static LocalDate leerFecha(String f){
         LocalDate fecha=null;
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
@@ -83,6 +116,12 @@ public class Comprobaciones {
         return fecha;
     }
 
+    /**
+     * Método que lee un nivel de luz introducido por el usuario.
+     * @param l
+     * @return
+     */
+
     public static Luminosidad leerLuminosidad(String l){
         Luminosidad nivelLuz=null;
         BufferedReader teclado= new BufferedReader( new InputStreamReader(System.in));
@@ -95,6 +134,12 @@ public class Comprobaciones {
         }   
         return nivelLuz;
     }
+
+    /**
+     * Método que lee un archivo introducido por el usuario.
+     * @param a
+     * @return
+     */
 
     public static Archivos leerArchivo(String a){
         Archivos archivo=null;

@@ -4,16 +4,33 @@ import java.util.Random;
 
 import ClasesLab.*;
 
+/**
+ * Clase que modela la simulación de Monte Carlo.
+ * La simulación de Monte Carlo tiene una población de bacterias y un número de días.
+ * @param poblacionBacterias Población de bacterias.
+ * @param dias Número de días de la simulación.
+ * @param celdas Número de celdas del cultivo.
+ * @param simulacionesDia Número de simulaciones por día.
+ * @param random Número aleatorio.
+ * @param cultivo Cultivo de bacterias.
+ * @param comida Comida de bacterias.
+ */
+
 public class SimulacionMonteCarlo{
 
     private static final int celdas=20;
     private static final int simulacionesDia=10;
     private static final Random random= new Random();
-
     private Poblacion poblacionBacterias;
     private int dias;
     private int[][][] cultivo;
     private int[][][] comida;
+
+    /**
+     * Constructor de la clase Simulación de Monte Carlo.
+     * @param poblacionBacterias
+     * @param dias
+     */
 
     public SimulacionMonteCarlo(Poblacion poblacionBacterias, int dias){
         this.poblacionBacterias=poblacionBacterias;
@@ -23,6 +40,11 @@ public class SimulacionMonteCarlo{
         inicializarCultivo();
     }
 
+    /**
+     * Método que inicializa el cultivo de bacterias.
+     * Se inicializa el cultivo con una cantidad de bacterias iniciales en el centro del cultivo.
+     * Se inicializa la comida en todas las celdas del cultivo.
+     */
     
     private void inicializarCultivo(){
         int contadorBacterias= (int) poblacionBacterias.getNumBacteriasIniciales();
@@ -39,12 +61,23 @@ public class SimulacionMonteCarlo{
         }
     }
 
+    /**
+     * Método que simula la distribución de comida en el cultivo.
+     * Se distribuye la comida en todas las celdas del cultivo.
+     * @param dia
+     */
+
     public void run(){
         for(int i=1; i<dias; i++){
         distribuirComida(i);
         simularDia(i);
         }
     }
+
+    /**
+     * Método que distribuye la comida en el cultivo.
+     * @param dia
+     */
 
     private void distribuirComida(int dia){
         float cantidadComida=calcularComidaDiaria(dia);
@@ -54,6 +87,12 @@ public class SimulacionMonteCarlo{
             }
         }
     }
+
+    /**
+     * Método que calcula la cantidad de comida diaria.
+     * @param dia
+     * @return
+     */
 
     private float calcularComidaDiaria(int dia){
         float comida0= poblacionBacterias.getDosis().getCantidadInicial();
@@ -68,6 +107,11 @@ public class SimulacionMonteCarlo{
         }
     }
 
+    /**
+     * Método que simula un día en el cultivo.
+     * @param dia
+     */
+
     private void simularDia(int dia){
 
         for (int i=0; i<celdas; i++){
@@ -81,6 +125,14 @@ public class SimulacionMonteCarlo{
         }
 
     }
+
+    /**
+     * Método que simula la evolución de las bacterias en una celda del cultivo.
+     * @param dia
+     * @param i
+     * @param j
+     * @param comida
+     */
 
     private void simularBacterias(int dia, int i, int j, int comida){
         for (int c=0; c< simulacionesDia; c++){
@@ -111,6 +163,14 @@ public class SimulacionMonteCarlo{
             }
         }
     }
+
+    /**
+     * Método que mueve una bacteria a una celda adyacente.
+     * @param dia
+     * @param x
+     * @param y
+     * @param numRandom
+     */
 
 
     private void moverBacteria(int dia, int x, int y, int numRandom){
@@ -155,8 +215,11 @@ public class SimulacionMonteCarlo{
         }
     }*/
     
+/**
+     * Getters y setters de la clase SimulacionMonteCarlo.
+     * @return
+     */
 
-    //Getters y setters
 
     public int [][][] getCultivo(){
         return cultivo;

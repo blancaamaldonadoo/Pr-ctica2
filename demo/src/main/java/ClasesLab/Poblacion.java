@@ -4,6 +4,18 @@ import java.time.LocalDate;
 import Excepciones.ExceptionCantidad;
 import InputOutput.Salida;
 
+/**
+ * Clase que modela una población de bacterias en el laboratorio.
+ * Una población tiene un nombre, una fecha de inicio, una fecha de fin, un número de bacterias iniciales, una temperatura, un nivel de luz y una dosis de antibiótico.
+ * @param nombre Nombre de la población.
+ * @param fechaInicio Fecha de inicio de la población.
+ * @param fechaFin Fecha de fin de la población.
+ * @param numBacteriasIniciales Número de bacterias iniciales.
+ * @param temperatura Temperatura de la población.
+ * @param nivelLuz Nivel de luz de la población.
+ * @param dosis Dosis de comida de la población.
+ */
+
 public class Poblacion extends Experimento{
     
     private String nombre;
@@ -13,6 +25,17 @@ public class Poblacion extends Experimento{
     private double temperatura;
     private Luminosidad nivelLuz;
     private Dosis dosis;
+
+    /**
+     * Constructor de la clase Población.
+     * @param nombre
+     * @param fechaInicio
+     * @param fechaFin
+     * @param numBacteriasIniciales
+     * @param temperatura
+     * @param nivelLuz
+     * @param dosis
+     */
 
     public Poblacion(String nombre, LocalDate fechaInicio, LocalDate fechaFin, int numBacteriasIniciales, double temperatura, Luminosidad nivelLuz, Dosis dosis) {
         this.nombre = nombre;
@@ -24,10 +47,28 @@ public class Poblacion extends Experimento{
         this.nivelLuz = nivelLuz;
     }
 
+    /**
+     * Constructor de la clase Población.
+     * @param nombre
+     * @param numBacteriasIniciales
+     */
+
     public Poblacion(String nombre, int numBacteriasIniciales){
         this.nombre=nombre;
         this.numBacteriasIniciales=numBacteriasIniciales;
     }
+
+    /**
+     * Constructor de la clase Población.
+     */
+
+    public Poblacion(){
+    }
+
+    /**
+     * Getters y setters de la clase Poblacion.
+     * @return
+     */
 
     public String getNombre(){
         return nombre;
@@ -73,6 +114,11 @@ public class Poblacion extends Experimento{
         this.dosis = dosis;
     }
 
+    /**
+     * Método que muestra los detalles de una población.
+     * @return
+     */
+
     @Override
     public String toString() {
         String texto="";
@@ -86,16 +132,32 @@ public class Poblacion extends Experimento{
         return texto;
     }
 
+    /**
+     * Método que crea una dosis.
+     * @throws ExceptionCantidad
+     */
+
     public void crearDosis() throws ExceptionCantidad{
         Salida salida= new Salida(); 
         salida.opcionesDosis();
     }
+
+    /**
+     * Método que modifica una dosis.
+     * @param dosis
+     * @throws ExceptionCantidad
+     */
 
     public void modificarDosis(Dosis dosis) throws ExceptionCantidad{
         Salida salida= new Salida();
         salida.datosModificarDosis(dosis);
     }
 
+    /**
+     * Método que visualiza una dosis.
+     * @param d
+     */
+    
     public void visualizarDosis(Dosis d){
         System.out.println(d.toString());
     }
