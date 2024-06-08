@@ -74,16 +74,16 @@ public class Archivos extends Laboratorio{
         return file;
     }
 
+    public void setFile(File file){
+        this.file=file;
+    }
+
     public Experimento getExperimento(){
         return experimento;
     }
 
     public void setExperimento(Experimento experimento){
         this.experimento=experimento;
-    }
-
-    public void setFile(File file){
-        this.file=file;
     }
 
     public void setNombre(String nombre){
@@ -157,46 +157,49 @@ public class Archivos extends Laboratorio{
     /**
      * Método que abre un archivo.
      * @return
+     * @throws IOException 
      */
 
-    public Experimento abrirArchivo(File archivo){
+    public Experimento abrirArchivo(File archivo) throws IOException{
         Experimento experimento = null;
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
             ArrayList<Poblacion> poblaciones = new ArrayList<>();
 
-            if ((linea = br.readLine()) != null) {
-            }
-
-            while ((linea = br.readLine()) != null) {
-                String[] campos = linea.split(",");
-
-                // Verificar que haya al menos tres campos
-                if (campos.length >= 3) {
+            while((linea= br.readLine()) != null){
+                String [] campos = linea.split(",");
+                if(campos.length >= 3){
                     String nombreExperimento = campos[0];
                     String nombrePoblacion = campos[1];
                     int cantidadInicial = Integer.parseInt(campos[2]);
 
-                    // Crear o reutilizar el objeto Experimento
-                    if (experimento == null) {
+                    if(experimento == null){
                         experimento = new Experimento(nombreExperimento, poblaciones);
                     }
 
                     Poblacion poblacion = new Poblacion(nombrePoblacion, cantidadInicial);
-
-                    // Agregar la poblacion al experimento
                     poblaciones.add(poblacion);
                 }
             }
-
-            if (experimento != null) {
+            if (experimento!= null) {
                 experimento.setPoblaciones(poblaciones);
             }
+
 
         } catch (IOException e) {
             System.err.println("Error al abrir el archivo: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.err.println("Error en el formato de los datos: " + e.getMessage());
+        }
+
+        try(PrintWriter pw= new PrintWriter(new FileWriter(archivo, true))){
+            if(experimento!=null){
+                for(Poblacion poblacion: experimento.getPoblaciones()){
+                    pw.println(poblacion.getNombre()+","+poblacion.getDosis());
+                }
+            }
+        }catch(IOException e){
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
         }
 
         return experimento;

@@ -79,9 +79,10 @@ public class Main{
      * Método que abre un archivo.
      * @throws ExceptionCantidad
      * @throws ExcepcionFechas
+     * @throws IOException 
      */
 
-    public static void abrirArchivo() throws ExceptionCantidad, ExcepcionFechas{
+    public static void abrirArchivo() throws ExceptionCantidad, ExcepcionFechas, IOException{
         System.out.println("Introduce el nombre del archivo: ");
         String nombre = Comprobaciones.leerString("");
         File archivo = new File(nombre + ".csv");
@@ -167,11 +168,13 @@ public class Main{
     
                 case 5:{
                     guardarExperimento(e);
+                    menuPrincipal();
                     break;
                 }
     
                 case 6:{
                     guardarExperimentoComo(e);
+                    menuPrincipal();
                     break;
                 }
     

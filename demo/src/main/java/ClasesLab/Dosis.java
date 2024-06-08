@@ -124,8 +124,10 @@ public class Dosis{
         texto+="La dosis dura: "+duracionDias+" días\n";
         if(cantidadConstante==0){
         texto+="Cantidad inicial: "+cantidadInicial+"\n";
+        if(diaStopIncremento!=0){
         texto+="Dia de fin de incremento: "+diaStopIncremento+"\n";
         texto+="Dosis de fin de incremento: "+dosisDiaStopIncremento+"\n";
+        }
         texto+="Dosis del dia 30: "+dosisDiaFinal+"\n";
         }
         else texto+= "Cantidad de comida constante: " + cantidadConstante;

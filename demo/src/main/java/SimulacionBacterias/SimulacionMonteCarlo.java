@@ -67,7 +67,7 @@ public class SimulacionMonteCarlo{
      * @param dia
      */
 
-    public void run(){
+    private void run(){
         for(int i=1; i<dias; i++){
         distribuirComida(i);
         simularDia(i);

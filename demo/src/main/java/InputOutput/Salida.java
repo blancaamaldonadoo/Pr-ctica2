@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import Excepciones.ExcepcionDiaDosis;
+import Excepciones.ExcepcionFechas;
 import Excepciones.ExceptionCantidad;
 import ClasesLab.*;
 
@@ -16,9 +17,10 @@ public class Salida{
      * Método que pide los datos de una población.
      * @return
      * @throws ExceptionCantidad
+     * @throws ExcepcionFechas 
      */
 
-    public Poblacion pedirDatosPoblacion() throws ExceptionCantidad{
+    public Poblacion pedirDatosPoblacion() throws ExceptionCantidad, ExcepcionFechas{
         String nombre= Comprobaciones.leerString("Introduce el nombre de la población: ");
         LocalDate [] fechas = comprobarFechas();
         int numBacteriasIniciales= Comprobaciones.leerInt("Introduce el número de bacterias iniciales: ");
@@ -36,7 +38,7 @@ public class Salida{
      * @return
      */
 
-    public LocalDate[] comprobarFechas(){
+    public LocalDate[] comprobarFechas() throws ExcepcionFechas{
         LocalDate [] fechas = new LocalDate[2];
         LocalDate fechaInicio;
         LocalDate fechaFin;
@@ -44,7 +46,7 @@ public class Salida{
             fechaInicio= Comprobaciones.leerFecha("Introduce la fecha de inicio (yyyy-MM-dd): ");   
             fechaFin=Comprobaciones.leerFecha("Introduce la fecha de fin (yyyy-MM-dd): ");
             if(fechaInicio.isAfter(fechaFin)){
-                System.out.println("La fecha de inicio no puede ser posterior a la fecha de fin");
+                throw new ExcepcionFechas("La fecha de inicio no puede ser posterior a la fecha de fin");
             }
         }
         while(fechaInicio.isAfter(fechaFin));
@@ -111,7 +113,12 @@ public class Salida{
         float cantidadInicial=Comprobaciones.leerFloat("Introduce la cantidad inicial de comida (mg): ");
         comprobarCantidadComida(cantidadInicial);
         int diaStopIncremento=Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
-                    " incrementar la dosis (De entre los 30 que dura el exeprimento): ");
+                    " incrementar la dosis (De entre los " + duracionDias + " dias establecidos):");
+        while(diaStopIncremento>duracionDias){
+            System.out.println("El día en el que se detiene el incremento de la dosis no puede ser mayor que la duración de la dosis");
+            diaStopIncremento=Comprobaciones.leerInt("Introduce el día en el que quiere dejar de "+
+                    " incrementar la dosis (De entre los " + duracionDias + " dias establecidos):");
+        }
         float dosisDiaStopIncremento=Comprobaciones.leerFloat("Introduce la cantidad que quiera dar ese día (mg): ");
         comprobarCantidadComida(dosisDiaStopIncremento);
         float dosisDiaFinal=Comprobaciones.leerFloat("Introduce la cantidad final (dia " + duracionDias +"): ");
