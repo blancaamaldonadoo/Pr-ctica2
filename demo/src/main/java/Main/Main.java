@@ -40,9 +40,10 @@ public class Main{
      * Método que muestra el menú principal del laboratorio de bacterias.
      * @throws ExceptionCantidad
      * @throws ExcepcionFechas
+     * @throws IOException 
      */
 
-    public static void menuPrincipal() throws ExceptionCantidad, ExcepcionFechas{
+    public static void menuPrincipal() throws ExceptionCantidad, ExcepcionFechas, IOException{
         System.out.println("\nElige una opción: ");
         System.out.println("1. Abrir un experimento ");
         System.out.println("2. Crear un nuevo experimento ");
