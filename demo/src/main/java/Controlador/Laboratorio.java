@@ -28,7 +28,6 @@ public class Laboratorio {
 
     public Laboratorio(){
         this.experimentoActual=null;
-        this.archivos= new ArrayList<Archivos>();
         this.experimentos = new ArrayList<Experimento>();
     }
 
@@ -43,10 +42,6 @@ public class Laboratorio {
 
     public void setExperimentos(ArrayList<Experimento> experimentos){
         this.experimentos = experimentos;
-    }
-
-    public ArrayList<Archivos> getArchivos(){
-        return archivos;
     }
 
     public Experimento getExperimentoActual(){

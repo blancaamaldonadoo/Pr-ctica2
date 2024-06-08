@@ -20,7 +20,7 @@ public class SimulacionMonteCarlo{
 
     private static final int celdas=20;
     private static final int simulacionesDia=10;
-    private static final Random random= new Random();
+    private static Random random= new Random();
     private Poblacion poblacionBacterias;
     private int dias;
     private int[][][] cultivo;
@@ -67,10 +67,43 @@ public class SimulacionMonteCarlo{
      * @param dia
      */
 
-    private void run(){
+    public void run(){
         for(int i=1; i<dias; i++){
+        System.out.println("Día: " + i);
+        System.out.println("Distribución de comida:");
         distribuirComida(i);
+        imprimirComida(i);
+        System.out.println("Distribución de bacterias:");
         simularDia(i);
+        imprimirCultivo(i);
+        }
+    }
+
+    /**
+     * Método que imprime la distribución de comida en el cultivo.
+     * @param dia
+     */
+
+    private void imprimirComida(int dia){
+        for(int i=0; i<celdas; i++){
+            for(int j=0; j<celdas; j++){
+                System.out.print(comida[dia][i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Método que imprime la distribución de bacterias en el cultivo.
+     * @param dia
+     */
+
+    private void imprimirCultivo(int dia){
+        for(int i=0; i<celdas; i++){
+            for(int j=0; j<celdas; j++){
+                System.out.print(cultivo[dia][i][j] + " ");
+            }
+            System.out.println();
         }
     }
 
@@ -200,30 +233,6 @@ public class SimulacionMonteCarlo{
         if(i>=0 && i<celdas && j >=0 && j<celdas){
             cultivo[dia][i][j]++;
             cultivo[dia][x][y]--;
-        }
-    }
-
-
-
-    public void ejecutarSimulacion() {
-        for (int dia = 0; dia < dias; dia++) {
-            run();
-            System.out.println("Día " + dia);
-            System.out.println("Bacterias restantes:");
-            for (int i = 0; i < celdas; i++) {
-                for (int j = 0; j < celdas; j++) {
-                    System.out.printf("%-4d", cultivo[dia][i][j]);
-                }
-                System.out.println();
-            }
-            System.out.println("Comida disponible:");
-            for (int i = 0; i < celdas; i++) {
-                for (int j = 0; j < celdas; j++) {
-                    System.out.printf("%-4d", comida[dia][i][j]);
-                }
-                System.out.println();
-            }
-            System.out.println();
         }
     }
     

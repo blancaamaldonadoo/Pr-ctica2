@@ -139,7 +139,7 @@ public class Poblacion extends Experimento{
 
     public void crearDosis() throws ExceptionCantidad{
         Salida salida= new Salida(); 
-        salida.opcionesDosis();
+        dosis=salida.opcionesDosis();
     }
 
     /**
@@ -162,4 +162,15 @@ public class Poblacion extends Experimento{
         System.out.println(d.toString());
     }
     
+    public static Poblacion fromString(String s) throws ExceptionCantidad {
+        String[] partes = s.split(",");
+        String nombre = partes[0];
+        LocalDate fechaInicio = LocalDate.parse(partes[1]);
+        LocalDate fechaFin = LocalDate.parse(partes[2]);
+        int numBacteriasIniciales = Integer.parseInt(partes[3]);
+        double temperatura = Double.parseDouble(partes[4]);
+        Luminosidad nivelLuz = Luminosidad.valueOf(partes[5]);
+        Dosis dosis = Dosis.valueOf(partes[6]);
+        return new Poblacion(nombre, fechaInicio, fechaFin, numBacteriasIniciales, temperatura, nivelLuz, dosis);
+    }
 }

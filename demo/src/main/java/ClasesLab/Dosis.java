@@ -212,4 +212,14 @@ public class Dosis{
         }
         return dosisMax;
     }
+
+    public static Dosis valueOf(String s) throws ExceptionCantidad {
+        String[] partes = s.split(",");
+        int duracionDias = Integer.parseInt(partes[0]);
+        float cantidadInicial = Float.parseFloat(partes[1]);
+        int diaStopIncremento = Integer.parseInt(partes[2]);
+        float dosisDiaStopIncremento = Float.parseFloat(partes[3]);
+        float dosisDiaFinal = Float.parseFloat(partes[4]);
+        return new Dosis(duracionDias, cantidadInicial, diaStopIncremento, dosisDiaStopIncremento, dosisDiaFinal);
+    }
 }

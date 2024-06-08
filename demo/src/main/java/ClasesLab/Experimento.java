@@ -79,6 +79,7 @@ public class Experimento implements Serializable{
     public Poblacion crearPoblacion() throws ExceptionCantidad, ExcepcionFechas{
        Salida salida= new Salida();
        Poblacion p= salida.pedirDatosPoblacion();
+       poblaciones.add(p);
        return p;
     }
     

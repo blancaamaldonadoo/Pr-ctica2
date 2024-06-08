@@ -2,12 +2,14 @@ package InputOutput;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import ClasesLab.Dosis;
 import ClasesLab.Experimento;
 import ClasesLab.Poblacion;
 import Controlador.Laboratorio;
+import Excepciones.ExceptionCantidad;
 
 /**
  * Clase que modela un archivo en el laboratorio.
@@ -65,6 +67,7 @@ public class Archivos extends Laboratorio{
     this.nombre=nombre;
     }
 
+
     /**
      * Getters y setters de la clase Archivos.
      * @return
@@ -107,15 +110,14 @@ public class Archivos extends Laboratorio{
         if (archivo.exists()) {
             try (FileWriter writer = new FileWriter(csvFile, true)) {
                 for (Poblacion poblacion : experimento.getPoblaciones()) {
-                    String line = String.format("%s,%s,%d\n",
+                    String line = String.format("%s,%s\n",
                         experimento.getNombre(),
-                        poblacion.getNombre(),
-                        poblacion.getDosis());
+                        poblacion.toString());
                     writer.append(line);
                 }
             }
         } else {
-            guardarComo(experimento, archivo);
+            guardarComo(experimento);
         }
     }
 
@@ -123,85 +125,72 @@ public class Archivos extends Laboratorio{
      * Método que guarda un experimento en un archivo.
      * @param e
      * @param newFile
+     * @throws IOException 
      */
 
-    public void guardarComo(Experimento e,File newFile){
+    public void guardarComo(Experimento e) throws IOException{
         File file;
         String nombre;
-        do {
-            nombre = Comprobaciones.leerString("Introduce el nombre del archivo: ");
-            file = new File(nombre + ".csv");
-            if (file.exists()) {
-                System.out.println("El archivo ya existe");
-            }
-        } while (file.exists());
-    
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.append("Nombre del Experimento,Nombre de la Poblacion,Dosis de Comida\n");
-            for (Poblacion poblacion : e.getPoblaciones()) {
-                String line = String.format("%s,%s,%d\n",
+        nombre = Comprobaciones.leerString("Introduce el nombre del archivo: ");
+        file = new File(nombre + ".csv");
+        try(FileWriter writer = new FileWriter(file)){
+            writer.append("Experimento, Poblaciones\n");
+            for(Poblacion poblacion: e.getPoblaciones()){
+                String line = String.format("%s,%s\n",
                     e.getNombre(),
-                    poblacion.getNombre(),
-                    poblacion.getDosis());
+                    poblacion.toString());
                 writer.append(line);
             }
-            System.out.println("El experimento ha sido guardado exitosamente.");
+        writer.flush();
+        System.out.println("El experimento ha sido guardado exitosamente.");
         } catch (IOException ex) {
             System.out.println("Error al guardar el experimento.");
             ex.printStackTrace();
         }
- }
+    }
 
-    
 
     /**
      * Método que abre un archivo.
      * @return
      * @throws IOException 
+     * @throws ExceptionCantidad 
      */
 
-    public Experimento abrirArchivo(File archivo) throws IOException{
-        Experimento experimento = null;
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            ArrayList<Poblacion> poblaciones = new ArrayList<>();
+    public static Experimento abrirArchivo() throws IOException, ExceptionCantidad{
+        String nombre = Comprobaciones.leerString("Introduce el nombre del archivo del experimento: ");
+        File file = new File(nombre + ".csv");
+            if (!file.exists()) {
+                System.out.println("El archivo no existe.");
+                return null;
+            }
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line = reader.readLine(); 
+                if(line==null){
+                    System.out.println("El archivo está vacío.");
+                    return null;
+                }
+                String nombreExperimento = null;
+                ArrayList<Poblacion> poblaciones = new ArrayList<>();
 
-            while((linea= br.readLine()) != null){
-                String [] campos = linea.split(",");
-                if(campos.length >= 3){
-                    String nombreExperimento = campos[0];
-                    String nombrePoblacion = campos[1];
-                    int cantidadInicial = Integer.parseInt(campos[2]);
-
-                    if(experimento == null){
-                        experimento = new Experimento(nombreExperimento, poblaciones);
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if(parts.length != 3){
+                        System.out.println("El archivo no tiene el formato correcto.");
+                        return null;
                     }
-
-                    Poblacion poblacion = new Poblacion(nombrePoblacion, cantidadInicial);
+                    nombreExperimento = parts[0];
+                    Poblacion poblacion = Poblacion.fromString(parts[1]);
                     poblaciones.add(poblacion);
                 }
+
+                Experimento experimento = new Experimento(nombreExperimento, poblaciones);
+                System.out.println("El experimento ha sido cargado exitosamente.");
+                return experimento;
+            } catch (IOException ex) {
+                System.out.println("Error al abrir el experimento.");
+                ex.printStackTrace();
+                return null;
             }
-            if (experimento!= null) {
-                experimento.setPoblaciones(poblaciones);
             }
-
-
-        } catch (IOException e) {
-            System.err.println("Error al abrir el archivo: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Error en el formato de los datos: " + e.getMessage());
-        }
-
-        try(PrintWriter pw= new PrintWriter(new FileWriter(archivo, true))){
-            if(experimento!=null){
-                for(Poblacion poblacion: experimento.getPoblaciones()){
-                    pw.println(poblacion.getNombre()+","+poblacion.getDosis());
-                }
-            }
-        }catch(IOException e){
-            System.err.println("Error al escribir en el archivo: " + e.getMessage());
-        }
-
-        return experimento;
-    }
 }

@@ -32,6 +32,7 @@ public class Main{
 
     public static void main(String[] args) throws IOException, ExceptionCantidad, ExcepcionFechas {
         laboratorio = new Laboratorio();
+        laboratorio.setExperimentos(new ArrayList<Experimento>());
         System.out.println("\n¡Bienvenido al laboratorio de bacterias!");
         menuPrincipal();
     }
@@ -53,7 +54,10 @@ public class Main{
         switch(opcion){
                 
                 case 1:{
-                    abrirArchivo();
+                    Experimento e= Archivos.abrirArchivo();
+                    laboratorio.setExperimentoActual(e);
+                    if(e==null) menuPrincipal();
+                    menuExperimento(e);
                     break;
                 }
     
@@ -77,41 +81,13 @@ public class Main{
     }
 
     /**
-     * Método que abre un archivo.
+     * Método que simula un experimento.
      * @throws ExceptionCantidad
      * @throws ExcepcionFechas
      * @throws IOException 
      */
 
-    public static void abrirArchivo() throws ExceptionCantidad, ExcepcionFechas, IOException{
-        System.out.println("Introduce el nombre del archivo: ");
-        String nombre = Comprobaciones.leerString("");
-        File archivo = new File(nombre + ".csv");
-        if(archivo.exists()){
-            Archivos archivos = new Archivos(archivo);
-            try {
-                Experimento e = archivos.abrirArchivo(archivo);
-                if (e != null) {
-                    laboratorio.setExperimentoActual(e);
-                    laboratorio.addArchivo(archivos);
-                    menuExperimento(e);
-                }
-            }catch (ExceptionCantidad | ExcepcionFechas ex) {
-                System.out.println("Error al abrir el experimento.");
-                ex.printStackTrace();
-            }
-        } else {
-            System.out.println("El archivo no existe");
-        }
-    }
-
-    /**
-     * Método que simula un experimento.
-     * @throws ExceptionCantidad
-     * @throws ExcepcionFechas
-     */
-
-    public static void simulacionExperimento() throws ExceptionCantidad, ExcepcionFechas{
+    public static void simulacionExperimento() throws ExceptionCantidad, ExcepcionFechas, IOException{
         Experimento e= laboratorio.buscarExperimento();
         if(e==null) menuPrincipal();
         String nombrePob=Comprobaciones.leerString("Introduce el nombre de la población que quiera simular");
@@ -119,7 +95,7 @@ public class Main{
         if (p==null) menuPrincipal();
         int dias= Comprobaciones.leerInt("Introduce el número de días que quieres simular: ");
         SimulacionMonteCarlo simulacion = new SimulacionMonteCarlo(p,dias);
-        simulacion.ejecutarSimulacion();
+        simulacion.run();
         menuPrincipal();
     }
 
@@ -128,9 +104,10 @@ public class Main{
      * @param e Experimento.
      * @throws ExceptionCantidad
      * @throws ExcepcionFechas
+     * @throws IOException 
      */
 
-    public static void menuExperimento(Experimento e) throws ExceptionCantidad, ExcepcionFechas{
+    public static void menuExperimento(Experimento e) throws ExceptionCantidad, ExcepcionFechas, IOException{
         System.out.println("\nElige una opción: ");
         System.out.println("1. Crear una población de bacterias y añadirla al experimento actual");
         System.out.println("2. Visualizar los nombres de todas las poblaciones de bacterias");
@@ -196,9 +173,10 @@ public class Main{
      * @param e
      * @throws ExceptionCantidad
      * @throws ExcepcionFechas
+     * @throws IOException 
      */
 
-    public static void visualizarNombresPoblaciones(Experimento e) throws ExceptionCantidad, ExcepcionFechas{
+    public static void visualizarNombresPoblaciones(Experimento e) throws ExceptionCantidad, ExcepcionFechas, IOException{
         if(e.getPoblaciones().isEmpty()){
             System.out.println("No hay poblaciones en el experimento actual");
             menuExperimento(e);
@@ -225,9 +203,10 @@ public class Main{
      * Método que muestra los detalles de una población.
      * @throws ExceptionCantidad
      * @throws ExcepcionFechas
+     * @throws IOException 
      */
 
-    public static void verDetallesPoblacion(Experimento e) throws ExceptionCantidad, ExcepcionFechas{
+    public static void verDetallesPoblacion(Experimento e) throws ExceptionCantidad, ExcepcionFechas, IOException{
         System.out.println("Introduce el nombre de la población de la que quieres ver los detalles: ");
         String nombre = Comprobaciones.leerString("");
         laboratorio.setExperimentoActual(e);
@@ -241,30 +220,24 @@ public class Main{
      * @param e
      * @throws ExcepcionFechas 
      * @throws ExceptionCantidad 
+     * @throws IOException 
      */
 
-    public static void guardarExperimento(Experimento e) throws ExceptionCantidad, ExcepcionFechas{
+    public static void guardarExperimento(Experimento e) throws ExceptionCantidad, ExcepcionFechas, IOException{
         Archivos archivos = new Archivos(e.getNombre());
-        Experimento experimento = new Experimento();
-        try {
-            archivos.guardar(experimento);
-        } catch (IOException ex) {
-            System.out.println("Error al guardar el experimento.");
-            ex.printStackTrace();
-        }
+        archivos.guardar(e);
         menuPrincipal();
     }
 
     /**
      * Método que guarda un experimento como.
      * @param e
+     * @throws IOException 
      */
 
-    public static void guardarExperimentoComo(Experimento e){
+    public static void guardarExperimentoComo(Experimento e) throws IOException{
         Archivos archivos = new Archivos(e.getNombre());
-        Experimento experimento = new Experimento();
-        File newFile = new File("ruta/del/archivo.csv");
-        archivos.guardarComo(experimento, newFile);
+        archivos.guardarComo(e);
     }
 
     /**
