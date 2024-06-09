@@ -2,10 +2,7 @@ package InputOutput;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-import ClasesLab.Dosis;
 import ClasesLab.Experimento;
 import ClasesLab.Poblacion;
 import Controlador.Laboratorio;
@@ -20,7 +17,7 @@ import Excepciones.ExceptionCantidad;
  * @param laboratorio Laboratorio.
  */
 
-public class Archivos extends Laboratorio{
+    public class Archivos extends Laboratorio{
     private String nombre;
     private File file;
     private Experimento experimento;
@@ -104,6 +101,7 @@ public class Archivos extends Laboratorio{
      */
 
     public void guardar(Experimento experimento) throws IOException{
+        
         String csvFile = nombre + ".csv";
         File archivo = new File(csvFile);
 
@@ -129,16 +127,16 @@ public class Archivos extends Laboratorio{
      */
 
     public void guardarComo(Experimento e) throws IOException{
+        
         File file;
         String nombre;
         nombre = Comprobaciones.leerString("Introduce el nombre del archivo: ");
         file = new File(nombre + ".csv");
         try(FileWriter writer = new FileWriter(file)){
-            writer.append("Experimento, Poblaciones\n");
+            writer.append("Experimento: " + e.getNombre()+ "\n");
+            writer.append("Poblaciones\n");
             for(Poblacion poblacion: e.getPoblaciones()){
-                String line = String.format("%s,%s\n",
-                    e.getNombre(),
-                    poblacion.toString());
+                String line = String.format("%s\n", poblacion.toString());
                 writer.append(line);
             }
         writer.flush();
@@ -175,12 +173,12 @@ public class Archivos extends Laboratorio{
 
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(",");
-                    if(parts.length != 3){
+                    if(parts.length != 8){
                         System.out.println("El archivo no tiene el formato correcto.");
                         return null;
                     }
                     nombreExperimento = parts[0];
-                    Poblacion poblacion = Poblacion.fromString(parts[1]);
+                    Poblacion poblacion = Poblacion.fromString(parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4] + "," + parts[5] + "," + parts[6] + "," + parts[7]);
                     poblaciones.add(poblacion);
                 }
 
